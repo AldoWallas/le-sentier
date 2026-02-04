@@ -1,0 +1,214 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: var(--bg-mid);
+  padding: 24px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 8px 8px 0 var(--bg-dark);
+  animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  color: var(--primary);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.modal-subtitle {
+  font-size: 14px;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal-actions .pixel-btn {
+  flex: 1;
+}
+
+/* XP SELECTOR - 4 niveaux */
+.xp-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.xp-option {
+  padding: 12px 8px;
+  background: var(--bg-dark);
+  border: 4px solid var(--pixel-border);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.xp-option:hover {
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+}
+
+.xp-option.selected {
+  border-color: var(--primary);
+  background: rgba(244, 180, 26, 0.2);
+}
+
+.xp-label {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.xp-option.selected .xp-label {
+  color: var(--primary);
+}
+
+.xp-value {
+  font-size: 16px;
+  color: var(--text-dim);
+}
+
+.xp-option.selected .xp-value {
+  color: var(--secondary);
+}
+
+/* RANK SELECTOR */
+.rank-selector {
+  margin-bottom: 16px;
+}
+
+.rank-label {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  color: var(--text-dim);
+  text-align: center;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.rank-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.rank-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  background: var(--bg-dark);
+  border: 4px solid var(--pixel-border);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rank-option:hover {
+  transform: translateY(-4px);
+}
+
+.rank-option.selected {
+  background: rgba(244, 180, 26, 0.1);
+}
+
+.rank-emoji {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.rank-option.selected .rank-emoji {
+  animation: bounce 0.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.rank-name {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 7px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.rank-option.selected .rank-name {
+  color: var(--primary);
+}
+
+.rank-info {
+  background: var(--bg-dark);
+  border: 4px solid var(--pixel-border);
+  padding: 12px;
+  text-align: center;
+}
+
+.rank-flavor {
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  min-height: 2.8em;
+}
+
+.rank-xp {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  color: var(--secondary);
+}
+
+/* TEXTAREA */
+textarea.pixel-input {
+  resize: vertical;
+  min-height: 60px;
+  font-family: 'VT323', monospace;
+}
+
+@media (max-width: 500px) {
+  .rank-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .xp-selector {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .xp-label {
+    font-size: 7px;
+  }
+}

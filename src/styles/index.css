@@ -1,0 +1,153 @@
+:root {
+  --bg-dark: #1a1c2c;
+  --bg-mid: #262b44;
+  --bg-light: #3a4466;
+  --primary: #f4b41a;
+  --primary-dark: #c99d16;
+  --secondary: #4dc9ff;
+  --success: #5dca42;
+  --danger: #e8403e;
+  --text: #f0f0f0;
+  --text-dim: #8b9bb4;
+  --pixel-border: #5a6988;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'VT323', monospace;
+  background: var(--bg-dark);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+/* PIXEL UTILITIES */
+.pixel-border {
+  border: 4px solid var(--pixel-border);
+  box-shadow: 
+    inset -4px -4px 0 rgba(0,0,0,0.3),
+    inset 4px 4px 0 rgba(255,255,255,0.1);
+}
+
+.pixel-btn {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  padding: 12px 16px;
+  background: var(--bg-light);
+  border: 4px solid var(--pixel-border);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.1s;
+  box-shadow: 
+    inset -4px -4px 0 rgba(0,0,0,0.3),
+    inset 4px 4px 0 rgba(255,255,255,0.1);
+}
+
+.pixel-btn:hover {
+  background: var(--bg-mid);
+  transform: translate(2px, 2px);
+}
+
+.pixel-btn:active {
+  transform: translate(4px, 4px);
+}
+
+.pixel-btn.primary {
+  background: var(--primary);
+  border-color: var(--primary-dark);
+  color: var(--bg-dark);
+}
+
+.pixel-btn.primary:hover {
+  background: #ffc83d;
+}
+
+.pixel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pixel-input {
+  width: 100%;
+  padding: 12px;
+  background: var(--bg-dark);
+  border: 4px solid var(--pixel-border);
+  color: var(--text);
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+}
+
+.pixel-input:focus {
+  outline: none;
+  border-color: var(--secondary);
+}
+
+.pixel-input::placeholder {
+  color: var(--text-dim);
+}
+
+/* LOADING SCREEN */
+.loading-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--bg-dark);
+}
+
+.loading-text {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  color: var(--primary);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* FORM GROUPS */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+/* EMPTY MESSAGE */
+.empty-message {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 24px;
+  font-size: 16px;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pixel-border);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-light);
+}

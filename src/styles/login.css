@@ -1,0 +1,131 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
+
+.login-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #0f0f1a, #1a1c2c, #262b44);
+  z-index: -1;
+}
+
+.pixel-stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  animation: twinkle 2s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.login-box {
+  background: rgba(38, 43, 68, 0.95);
+  padding: 40px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 24px;
+  color: var(--primary);
+  margin-bottom: 8px;
+  text-shadow: 4px 4px 0 var(--bg-dark);
+}
+
+.login-subtitle {
+  font-size: 18px;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+}
+
+.login-error {
+  background: rgba(232, 64, 62, 0.2);
+  border: 2px solid var(--danger);
+  color: var(--danger);
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.login-message {
+  background: rgba(93, 202, 66, 0.2);
+  border: 2px solid var(--success);
+  color: var(--success);
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.login-form {
+  text-align: left;
+}
+
+.login-form .pixel-btn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  color: var(--text-dim);
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: var(--pixel-border);
+}
+
+.login-divider span {
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+.google-btn {
+  width: 100%;
+  background: var(--bg-dark);
+}
+
+.login-switch {
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.login-switch button {
+  background: none;
+  border: none;
+  color: var(--secondary);
+  cursor: pointer;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  margin-left: 8px;
+}
+
+.login-switch button:hover {
+  text-decoration: underline;
+}
