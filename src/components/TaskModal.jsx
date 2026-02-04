@@ -1,23 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { TASK_XP_LEVELS } from '../lib/constants'
 import '../styles/modal.css'
 
-export default function TaskModal({ onClose, onAdd, questId = null, chapterId = null }) {
-  const [name, setName] = useState('')
-  const [xp, setXp] = useState(25)
+export default function TaskModal({ onClose, onSubmit, initialTask = null, questId = null, chapterId = null }) {
+  const [name, setName] = useState(initialTask?.name || '')
+  const [xp, setXp] = useState(initialTask?.xp || 25)
+
+  useEffect(() => {
+    if (initialTask) {
+      setName(initialTask.name)
+      setXp(initialTask.xp)
+    }
+  }, [initialTask])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (name.trim()) {
-      onAdd(name.trim(), xp, questId, chapterId)
+      onSubmit(name.trim(), xp)
       onClose()
     }
   }
+  
+  const isEditing = !!initialTask
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal pixel-border" onClick={e => e.stopPropagation()}>
-        <h3 className="modal-title">NOUVELLE TÂCHE</h3>
+        <h3 className="modal-title">{isEditing ? 'ÉDITER TÂCHE' : 'NOUVELLE TÂCHE'}</h3>
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -55,7 +64,7 @@ export default function TaskModal({ onClose, onAdd, questId = null, chapterId = 
               ANNULER
             </button>
             <button type="submit" className="pixel-btn primary" disabled={!name.trim()}>
-              CRÉER
+              {isEditing ? 'MODIFIER' : 'CRÉER'}
             </button>
           </div>
         </form>

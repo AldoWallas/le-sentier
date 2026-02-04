@@ -1,14 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import '../styles/modal.css'
 
-export default function ChapterModal({ onClose, onAdd, questName }) {
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
+export default function ChapterModal({ onClose, onSubmit, initialChapter = null, questName }) {
+  const [name, setName] = useState(initialChapter?.name || '')
+  const [description, setDescription] = useState(initialChapter?.description || '')
+
+  useEffect(() => {
+    if (initialChapter) {
+      setName(initialChapter.name)
+      setDescription(initialChapter.description || '')
+    }
+  }, [initialChapter])
+
+  const isEditing = !!initialChapter
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (name.trim()) {
-      onAdd(name.trim(), description.trim() || null)
+      onSubmit(name.trim(), description.trim() || null)
       onClose()
     }
   }
@@ -16,7 +25,7 @@ export default function ChapterModal({ onClose, onAdd, questName }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal pixel-border" onClick={e => e.stopPropagation()}>
-        <h3 className="modal-title">NOUVEAU CHAPITRE</h3>
+        <h3 className="modal-title">{isEditing ? 'ÉDITER CHAPITRE' : 'NOUVEAU CHAPITRE'}</h3>
         {questName && (
           <p className="modal-subtitle">Pour : {questName}</p>
         )}
@@ -50,7 +59,7 @@ export default function ChapterModal({ onClose, onAdd, questName }) {
               ANNULER
             </button>
             <button type="submit" className="pixel-btn primary" disabled={!name.trim()}>
-              CRÉER
+              {isEditing ? 'MODIFIER' : 'CRÉER'}
             </button>
           </div>
         </form>

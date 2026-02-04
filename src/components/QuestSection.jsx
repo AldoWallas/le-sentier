@@ -7,8 +7,14 @@ export default function QuestSection({
   chapters,
   tasks,
   onAddQuest,
+  onEditQuest,
+  onDeleteQuest,
   onAddChapter,
+  onEditChapter,
+  onDeleteChapter,
   onAddTask,
+  onEditTask,
+  onDeleteTask,
   onTaskComplete 
 }) {
   const [isOpen, setIsOpen] = useState(true)
@@ -72,9 +78,9 @@ export default function QuestSection({
             
             return (
               <div key={quest.id} className={`quest-item ${isQuestOpen ? 'open' : ''}`}>
-                <div className="quest-header" onClick={() => toggleQuest(quest.id)}>
-                  <span className="quest-icon">{rank?.emoji || '❓'}</span>
-                  <div className="quest-info">
+                <div className="quest-header">
+                  <span className="quest-icon" onClick={() => toggleQuest(quest.id)}>{rank?.emoji || '❓'}</span>
+                  <div className="quest-info" onClick={() => toggleQuest(quest.id)}>
                     <div className="quest-name">{quest.name.toUpperCase()}</div>
                     <div className="quest-progress-bar">
                       <div 
@@ -83,8 +89,32 @@ export default function QuestSection({
                       />
                     </div>
                   </div>
-                  <div className="quest-stats">{progress.done}/{progress.total}</div>
-                  <span className="quest-toggle">▶</span>
+                  <div className="quest-stats" onClick={() => toggleQuest(quest.id)}>{progress.done}/{progress.total}</div>
+                  <div className="quest-header-actions">
+                    <button 
+                      className="icon-btn" 
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onEditQuest(quest)
+                      }}
+                      title="Éditer"
+                    >
+                      ✏️
+                    </button>
+                    <button 
+                      className="icon-btn" 
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        if (confirm(`Supprimer la quête "${quest.name}" ?`)) {
+                          onDeleteQuest(quest.id)
+                        }
+                      }}
+                      title="Supprimer"
+                    >
+                      ❌
+                    </button>
+                  </div>
+                  <span className="quest-toggle" onClick={() => toggleQuest(quest.id)}>▶</span>
                 </div>
                 
                 <div className="quest-children">
@@ -96,9 +126,9 @@ export default function QuestSection({
                     
                     return (
                       <div key={chapter.id} className={`chapter-item ${isChapterOpen ? 'open' : ''}`}>
-                        <div className="chapter-header" onClick={() => toggleChapter(chapter.id)}>
-                          <span className="chapter-icon">📖</span>
-                          <div className="chapter-info">
+                        <div className="chapter-header">
+                          <span className="chapter-icon" onClick={() => toggleChapter(chapter.id)}>📖</span>
+                          <div className="chapter-info" onClick={() => toggleChapter(chapter.id)}>
                             <div className="chapter-name">{chapter.name}</div>
                             <div className="chapter-progress-bar">
                               <div 
@@ -107,8 +137,32 @@ export default function QuestSection({
                               />
                             </div>
                           </div>
-                          <div className="chapter-stats">{chapterProgress.done}/{chapterProgress.total}</div>
-                          <span className="chapter-toggle">▶</span>
+                          <div className="chapter-stats" onClick={() => toggleChapter(chapter.id)}>{chapterProgress.done}/{chapterProgress.total}</div>
+                          <div className="chapter-header-actions">
+                            <button 
+                              className="icon-btn-small" 
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                onEditChapter(chapter)
+                              }}
+                              title="Éditer"
+                            >
+                              ✏️
+                            </button>
+                            <button 
+                              className="icon-btn-small" 
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                if (confirm(`Supprimer le chapitre "${chapter.name}" ?`)) {
+                                  onDeleteChapter(chapter.id)
+                                }
+                              }}
+                              title="Supprimer"
+                            >
+                              ❌
+                            </button>
+                          </div>
+                          <span className="chapter-toggle" onClick={() => toggleChapter(chapter.id)}>▶</span>
                         </div>
                         
                         <div className="chapter-tasks">
@@ -116,10 +170,35 @@ export default function QuestSection({
                             <div 
                               key={task.id} 
                               className={`sub-task ${task.status === 'completed' ? 'completed' : ''}`}
-                              onClick={() => onTaskComplete(task.id)}
                             >
-                              <div className="sub-task-name">
-                                {task.status === 'completed' ? '✓' : '○'} {task.name}
+                              <div 
+                                className="sub-task-checkbox"
+                                onClick={() => onTaskComplete(task.id)}
+                              >
+                                {task.status === 'completed' ? '✓' : '○'}
+                              </div>
+                              <div className="sub-task-name">{task.name}</div>
+                              <div className="sub-task-actions">
+                                <button 
+                                  className="icon-btn-tiny" 
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    onEditTask(task)
+                                  }}
+                                  title="Éditer"
+                                >
+                                  ✏️
+                                </button>
+                                <button 
+                                  className="icon-btn-tiny" 
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    onDeleteTask(task.id)
+                                  }}
+                                  title="Supprimer"
+                                >
+                                  ❌
+                                </button>
                               </div>
                               <div className="sub-task-xp">+{task.xp}</div>
                             </div>
@@ -144,10 +223,35 @@ export default function QuestSection({
                     <div 
                       key={task.id} 
                       className={`sub-task ${task.status === 'completed' ? 'completed' : ''}`}
-                      onClick={() => onTaskComplete(task.id)}
                     >
-                      <div className="sub-task-name">
-                        {task.status === 'completed' ? '✓' : '○'} {task.name}
+                      <div 
+                        className="sub-task-checkbox"
+                        onClick={() => onTaskComplete(task.id)}
+                      >
+                        {task.status === 'completed' ? '✓' : '○'}
+                      </div>
+                      <div className="sub-task-name">{task.name}</div>
+                      <div className="sub-task-actions">
+                        <button 
+                          className="icon-btn-tiny" 
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onEditTask(task)
+                          }}
+                          title="Éditer"
+                        >
+                          ✏️
+                        </button>
+                        <button 
+                          className="icon-btn-tiny" 
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onDeleteTask(task.id)
+                          }}
+                          title="Supprimer"
+                        >
+                          ❌
+                        </button>
                       </div>
                       <div className="sub-task-xp">+{task.xp}</div>
                     </div>

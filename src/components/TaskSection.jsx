@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../styles/sections.css'
 
-export default function TaskSection({ tasks, onComplete, onDelete, onAdd }) {
+export default function TaskSection({ tasks, onComplete, onDelete, onEdit, onAdd }) {
   const [isOpen, setIsOpen] = useState(true)
 
   const getTaskAge = (createdAt) => {
@@ -14,7 +14,7 @@ export default function TaskSection({ tasks, onComplete, onDelete, onAdd }) {
   return (
     <section className={`section ${isOpen ? 'open' : ''}`}>
       <div className="section-header" onClick={() => setIsOpen(!isOpen)}>
-        <h2 className="section-title">QUÊTES DU JOUR</h2>
+        <h2 className="section-title">TÂCHES DU JOUR</h2>
         <span className="section-toggle">▼</span>
       </div>
       
@@ -48,10 +48,24 @@ export default function TaskSection({ tasks, onComplete, onDelete, onAdd }) {
                   </div>
                   <div className="task-actions">
                     <button 
-                      className="task-btn" 
-                      onClick={() => onDelete(task.id)}
+                      className="task-btn task-btn-edit" 
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onEdit(task)
+                      }}
+                      title="Éditer"
                     >
-                      ✕
+                      ✏️
+                    </button>
+                    <button 
+                      className="task-btn task-btn-delete" 
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onDelete(task.id)
+                      }}
+                      title="Supprimer"
+                    >
+                      ❌
                     </button>
                   </div>
                 </li>
@@ -60,11 +74,11 @@ export default function TaskSection({ tasks, onComplete, onDelete, onAdd }) {
           </ul>
           
           {tasks.length === 0 && (
-            <p className="empty-message">Aucune quête pour le moment</p>
+            <p className="empty-message">Aucune tâche pour le moment</p>
           )}
           
           <button className="add-btn" onClick={onAdd}>
-            + NOUVELLE QUÊTE
+            + NOUVELLE TÂCHE
           </button>
         </div>
       </div>

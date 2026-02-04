@@ -20,10 +20,11 @@ export default function Dashboard() {
   
   // Modals
   const [taskModalOpen, setTaskModalOpen] = useState(false)
-  const [taskModalContext, setTaskModalContext] = useState({ questId: null, chapterId: null })
+  const [taskModalContext, setTaskModalContext] = useState({ task: null, questId: null, chapterId: null })
   const [questModalOpen, setQuestModalOpen] = useState(false)
+  const [questToEdit, setQuestToEdit] = useState(null)
   const [chapterModalOpen, setChapterModalOpen] = useState(false)
-  const [chapterModalContext, setChapterModalContext] = useState({ questId: null, questName: '' })
+  const [chapterModalContext, setChapterModalContext] = useState({ chapter: null, questId: null, questName: '' })
   
   const { user, signOut } = useAuth()
   const navigate = useNavigate()
@@ -35,7 +36,6 @@ export default function Dashboard() {
   const loadData = async () => {
     setLoading(true)
     
-    // Charger le personnage actif
     const { data: chars } = await supabase
       .from('characters')
       .select('*')
@@ -51,7 +51,6 @@ export default function Dashboard() {
     const char = chars[0]
     setCharacter(char)
     
-    // Charger les tâches (non archivées)
     const { data: tasksData } = await supabase
       .from('tasks')
       .select('*')
@@ -62,7 +61,6 @@ export default function Dashboard() {
     
     setTasks(tasksData || [])
     
-    // Charger les quêtes
     const { data: questsData } = await supabase
       .from('quests')
       .select('*')
@@ -72,7 +70,6 @@ export default function Dashboard() {
     
     setQuests(questsData || [])
     
-    // Charger les chapitres
     const { data: chaptersData } = await supabase
       .from('chapters')
       .select('*')
@@ -84,7 +81,6 @@ export default function Dashboard() {
     setLoading(false)
   }
 
-  // Calculer le jour du périple
   const getDayCount = () => {
     if (!character) return 0
     const start = new Date(character.start_date)
@@ -93,7 +89,6 @@ export default function Dashboard() {
     return diff + 1
   }
 
-  // Compléter une tâche
   const completeTask = async (taskId) => {
     const task = tasks.find(t => t.id === taskId)
     if (!task) return
@@ -106,7 +101,6 @@ export default function Dashboard() {
       .update({ status: newStatus, completed_at: completedAt })
       .eq('id', taskId)
 
-    // Mettre à jour l'XP si complété
     if (newStatus === 'completed' && character) {
       const newXp = character.xp + task.xp
       const newLevel = calculateLevel(newXp)
@@ -119,7 +113,6 @@ export default function Dashboard() {
       setCharacter(prev => ({ ...prev, xp: newXp, level: newLevel }))
     }
     
-    // Si décomplété, retirer l'XP
     if (newStatus === 'pending' && character) {
       const newXp = Math.max(0, character.xp - task.xp)
       const newLevel = calculateLevel(newXp)
@@ -139,7 +132,6 @@ export default function Dashboard() {
     ))
   }
 
-  // Supprimer une tâche
   const deleteTask = async (taskId) => {
     await supabase
       .from('tasks')
@@ -149,7 +141,6 @@ export default function Dashboard() {
     setTasks(prev => prev.filter(t => t.id !== taskId))
   }
 
-  // Ajouter une tâche
   const addTask = async (name, xp, questId = null, chapterId = null) => {
     const { data, error } = await supabase
       .from('tasks')
@@ -170,7 +161,34 @@ export default function Dashboard() {
     }
   }
 
-  // Ajouter une quête
+  const editTask = async (taskId, name, xp) => {
+    const { data, error } = await supabase
+      .from('tasks')
+      .update({ name, xp: parseInt(xp) })
+      .eq('id', taskId)
+      .select()
+      .single()
+
+    if (!error && data) {
+      setTasks(prev => prev.map(t => t.id === taskId ? data : t))
+    }
+  }
+
+  const openEditTask = (task) => {
+    setTaskModalContext({ task, questId: task.quest_id, chapterId: task.chapter_id })
+    setTaskModalOpen(true)
+  }
+
+  const handleTaskModalSubmit = (name, xp) => {
+    if (taskModalContext.task) {
+      // Mode édition
+      editTask(taskModalContext.task.id, name, xp)
+    } else {
+      // Mode création
+      addTask(name, xp, taskModalContext.questId, taskModalContext.chapterId)
+    }
+  }
+
   const addQuest = async (name, rank, xpReward) => {
     const { data, error } = await supabase
       .from('quests')
@@ -189,7 +207,43 @@ export default function Dashboard() {
     }
   }
 
-  // Ajouter un chapitre
+  const editQuest = async (questId, name, rank, xpReward) => {
+    const { data, error } = await supabase
+      .from('quests')
+      .update({ name, rank, xp_reward: xpReward })
+      .eq('id', questId)
+      .select()
+      .single()
+
+    if (!error && data) {
+      setQuests(prev => prev.map(q => q.id === questId ? data : q))
+    }
+  }
+
+  const deleteQuest = async (questId) => {
+    await supabase
+      .from('quests')
+      .update({ status: 'abandoned' })
+      .eq('id', questId)
+
+    setQuests(prev => prev.filter(q => q.id !== questId))
+  }
+
+  const openEditQuest = (quest) => {
+    setQuestToEdit(quest)
+    setQuestModalOpen(true)
+  }
+
+  const handleQuestModalSubmit = (name, rank, xpReward) => {
+    if (questToEdit) {
+      // Mode édition
+      editQuest(questToEdit.id, name, rank, xpReward)
+    } else {
+      // Mode création
+      addQuest(name, rank, xpReward)
+    }
+  }
+
   const addChapter = async (name, description, questId) => {
     const { data, error } = await supabase
       .from('chapters')
@@ -207,7 +261,48 @@ export default function Dashboard() {
     }
   }
 
-  // Calculer le niveau basé sur l'XP
+  const editChapter = async (chapterId, name, description) => {
+    const { data, error } = await supabase
+      .from('chapters')
+      .update({ name, description })
+      .eq('id', chapterId)
+      .select()
+      .single()
+
+    if (!error && data) {
+      setChapters(prev => prev.map(c => c.id === chapterId ? data : c))
+    }
+  }
+
+  const deleteChapter = async (chapterId) => {
+    await supabase
+      .from('chapters')
+      .delete()
+      .eq('id', chapterId)
+
+    setChapters(prev => prev.filter(c => c.id !== chapterId))
+  }
+
+  const openEditChapter = (chapter) => {
+    const quest = quests.find(q => q.id === chapter.quest_id)
+    setChapterModalContext({ 
+      chapter, 
+      questId: chapter.quest_id, 
+      questName: quest?.name || '' 
+    })
+    setChapterModalOpen(true)
+  }
+
+  const handleChapterModalSubmit = (name, description) => {
+    if (chapterModalContext.chapter) {
+      // Mode édition
+      editChapter(chapterModalContext.chapter.id, name, description)
+    } else {
+      // Mode création
+      addChapter(name, description, chapterModalContext.questId)
+    }
+  }
+
   const calculateLevel = (xp) => {
     const thresholds = [0, 100, 250, 500, 850, 1300, 1850, 2500, 3300, 4200, 5200, 
                        6300, 7500, 8800, 10200, 11700, 13300, 15000, 16800, 18700, 20700]
@@ -217,7 +312,6 @@ export default function Dashboard() {
     return 1
   }
 
-  // XP pour le niveau suivant
   const getXpForNextLevel = (level) => {
     const thresholds = [0, 100, 250, 500, 850, 1300, 1850, 2500, 3300, 4200, 5200, 
                        6300, 7500, 8800, 10200, 11700, 13300, 15000, 16800, 18700, 20700]
@@ -232,7 +326,6 @@ export default function Dashboard() {
     return Math.min(100, Math.max(0, progress))
   }
 
-  // Obtenir le greeting selon l'heure
   const getGreeting = () => {
     const hour = new Date().getHours()
     if (hour >= 5 && hour < 12) return 'BONJOUR'
@@ -241,7 +334,6 @@ export default function Dashboard() {
     return 'BONNE NUIT'
   }
 
-  // Stats rapides
   const getStats = () => {
     const todayTasks = tasks.filter(t => {
       const created = new Date(t.created_at).toDateString()
@@ -261,14 +353,13 @@ export default function Dashboard() {
     }
   }
 
-  // Handlers pour ouvrir les modals
   const openTaskModal = (questId = null, chapterId = null) => {
-    setTaskModalContext({ questId, chapterId })
+    setTaskModalContext({ task: null, questId, chapterId })
     setTaskModalOpen(true)
   }
 
   const openChapterModal = (questId, questName) => {
-    setChapterModalContext({ questId, questName })
+    setChapterModalContext({ chapter: null, questId, questName })
     setChapterModalOpen(true)
   }
 
@@ -307,6 +398,7 @@ export default function Dashboard() {
           tasks={tasks.filter(t => !t.quest_id && !t.chapter_id)}
           onComplete={completeTask}
           onDelete={deleteTask}
+          onEdit={openEditTask}
           onAdd={() => openTaskModal()}
         />
         
@@ -314,12 +406,21 @@ export default function Dashboard() {
           quests={quests}
           chapters={chapters}
           tasks={tasks}
-          onAddQuest={() => setQuestModalOpen(true)}
+          onAddQuest={() => {
+            setQuestToEdit(null)
+            setQuestModalOpen(true)
+          }}
+          onEditQuest={openEditQuest}
+          onDeleteQuest={deleteQuest}
           onAddChapter={(questId) => {
             const quest = quests.find(q => q.id === questId)
             openChapterModal(questId, quest?.name || '')
           }}
+          onEditChapter={openEditChapter}
+          onDeleteChapter={deleteChapter}
           onAddTask={openTaskModal}
+          onEditTask={openEditTask}
+          onDeleteTask={deleteTask}
           onTaskComplete={completeTask}
         />
       </div>
@@ -327,7 +428,8 @@ export default function Dashboard() {
       {taskModalOpen && (
         <TaskModal 
           onClose={() => setTaskModalOpen(false)}
-          onAdd={(name, xp) => addTask(name, xp, taskModalContext.questId, taskModalContext.chapterId)}
+          onSubmit={handleTaskModalSubmit}
+          initialTask={taskModalContext.task}
           questId={taskModalContext.questId}
           chapterId={taskModalContext.chapterId}
         />
@@ -335,15 +437,20 @@ export default function Dashboard() {
 
       {questModalOpen && (
         <QuestModal 
-          onClose={() => setQuestModalOpen(false)}
-          onAdd={addQuest}
+          onClose={() => {
+            setQuestModalOpen(false)
+            setQuestToEdit(null)
+          }}
+          onSubmit={handleQuestModalSubmit}
+          initialQuest={questToEdit}
         />
       )}
 
       {chapterModalOpen && (
         <ChapterModal 
           onClose={() => setChapterModalOpen(false)}
-          onAdd={(name, description) => addChapter(name, description, chapterModalContext.questId)}
+          onSubmit={handleChapterModalSubmit}
+          initialChapter={chapterModalContext.chapter}
           questName={chapterModalContext.questName}
         />
       )}

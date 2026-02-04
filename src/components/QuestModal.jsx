@@ -1,17 +1,25 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { QUEST_RANKS } from '../lib/constants'
 import '../styles/modal.css'
 
-export default function QuestModal({ onClose, onAdd }) {
-  const [name, setName] = useState('')
-  const [selectedRank, setSelectedRank] = useState('rank_e')
+export default function QuestModal({ onClose, onSubmit, initialQuest = null }) {
+  const [name, setName] = useState(initialQuest?.name || '')
+  const [selectedRank, setSelectedRank] = useState(initialQuest?.rank || 'rank_e')
+
+  useEffect(() => {
+    if (initialQuest) {
+      setName(initialQuest.name)
+      setSelectedRank(initialQuest.rank)
+    }
+  }, [initialQuest])
 
   const rank = QUEST_RANKS.find(r => r.id === selectedRank)
+  const isEditing = !!initialQuest
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (name.trim() && rank) {
-      onAdd(name.trim(), selectedRank, rank.xp)
+      onSubmit(name.trim(), selectedRank, rank.xp)
       onClose()
     }
   }
@@ -19,7 +27,7 @@ export default function QuestModal({ onClose, onAdd }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal pixel-border" onClick={e => e.stopPropagation()}>
-        <h3 className="modal-title">NOUVELLE QUÊTE</h3>
+        <h3 className="modal-title">{isEditing ? 'ÉDITER QUÊTE' : 'NOUVELLE QUÊTE'}</h3>
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -64,7 +72,7 @@ export default function QuestModal({ onClose, onAdd }) {
               ANNULER
             </button>
             <button type="submit" className="pixel-btn primary" disabled={!name.trim()}>
-              CRÉER
+              {isEditing ? 'MODIFIER' : 'CRÉER'}
             </button>
           </div>
         </form>
