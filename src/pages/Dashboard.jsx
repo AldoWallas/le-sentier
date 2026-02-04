@@ -9,6 +9,7 @@ import QuestSection from '../components/QuestSection'
 import TaskModal from '../components/TaskModal'
 import QuestModal from '../components/QuestModal'
 import ChapterModal from '../components/ChapterModal'
+import DynamicBackground from '../components/DynamicBackground'
 import '../styles/dashboard.css'
 
 export default function Dashboard() {
@@ -375,11 +376,7 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard">
-      <div className="dashboard-background">
-        <div className="pixel-ground">
-          <div className="pixel-path" />
-        </div>
-      </div>
+      <DynamicBackground />
       
       <div className="dashboard-container">
         <Header 
