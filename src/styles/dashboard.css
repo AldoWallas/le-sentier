@@ -87,57 +87,78 @@
   box-shadow: 0 0 4px white;
 }
 
-/* ===== SOLEIL / LUNE - ROTATION STYLE MINECRAFT ===== */
+/* ===== SOLEIL / LUNE - ROTATION STYLE MINECRAFT (VERSION CORRIGÉE) ===== */
 
-/* Container orbital qui tourne */
+/* Container orbital qui tourne - Version plus compacte et visible */
 .celestial-orbit {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 800px;
-  height: 800px;
-  margin-left: -400px;
-  margin-top: -400px;
+  top: 15%;
+  right: 10%;
+  width: 300px;
+  height: 300px;
   transition: transform 2s linear;
   pointer-events: none;
 }
 
 .celestial-body {
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   transition: opacity 0.5s ease;
 }
 
-/* Soleil - positionné en haut de l'orbite (midi = en haut) */
+/* Soleil - positionné en haut de l'orbite */
 .sun {
   background: radial-gradient(circle, #ffe066, #ffb84d);
-  box-shadow: 0 0 40px rgba(255, 224, 102, 0.6);
-  top: 0;
+  box-shadow: 0 0 40px rgba(255, 224, 102, 0.8);
+  top: -30px;
   left: 50%;
-  margin-left: -40px;
+  margin-left: -30px;
 }
 
-/* Lune - à l'opposé du soleil (180°) */
+/* Lune - à l'opposé du soleil (en bas) */
 .moon {
   background: radial-gradient(circle, #f0f0f0, #d4d4d4);
-  box-shadow: 0 0 30px rgba(240, 240, 240, 0.4);
-  bottom: 0;
+  box-shadow: 0 0 30px rgba(240, 240, 240, 0.6);
+  bottom: -30px;
   left: 50%;
-  margin-left: -40px;
+  margin-left: -30px;
 }
 
-/* Visibilité selon position dans le ciel */
-.dashboard-background.dawn .moon,
+/* Visibilité selon moment de la journée */
+.dashboard-background.dawn .moon {
+  opacity: 0.2;
+}
+
 .dashboard-background.day .moon {
-  opacity: 0.3;
+  opacity: 0.1;
 }
 
-.dashboard-background.dusk .sun,
-.dashboard-background.night .sun {
-  opacity: 0.3;
+.dashboard-background.dusk .moon {
+  opacity: 0.5;
 }
+
+.dashboard-background.night .moon {
+  opacity: 1;
+}
+
+.dashboard-background.dawn .sun {
+  opacity: 0.8;
+}
+
+.dashboard-background.day .sun {
+  opacity: 1;
+}
+
+.dashboard-background.dusk .sun {
+  opacity: 0.5;
+}
+
+.dashboard-background.night .sun {
+  opacity: 0.1;
+}
+
 
 /* ===== NUAGES ===== */
 

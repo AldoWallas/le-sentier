@@ -17,9 +17,11 @@ export default function DynamicBackground() {
       // Calculer l'heure exacte en décimal (ex: 14h30 = 14.5)
       const exactHour = hour + minutes / 60
       
-      // Calculer l'angle de rotation (0h = 0°, 6h = 90°, 12h = 180°, 18h = 270°)
-      // On fait tourner sur 24h (360°)
-      const angle = (exactHour / 24) * 360
+      // Calculer l'angle de rotation
+      // Minuit (0h) = 0° (lune en haut)
+      // Midi (12h) = 180° (soleil en haut)
+      // On ajuste pour que le soleil soit en haut à midi
+      const angle = ((exactHour - 6) / 24) * 360
       setCelestialRotation(angle)
       
       // Déterminer le moment de la journée pour les couleurs
@@ -103,10 +105,14 @@ export default function DynamicBackground() {
         }}
       >
         {/* Soleil - positionné sur l'orbite */}
-        <div className="celestial-body sun" />
+        <div className="celestial-body sun" style={{ 
+          transform: `rotate(${-celestialRotation}deg)` 
+        }} />
         
         {/* Lune - à l'opposé du soleil (180°) */}
-        <div className="celestial-body moon" />
+        <div className="celestial-body moon" style={{ 
+          transform: `rotate(${-celestialRotation}deg)` 
+        }} />
       </div>
 
       {/* Nuages */}
