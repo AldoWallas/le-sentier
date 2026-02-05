@@ -5,11 +5,24 @@ export default function DynamicBackground() {
   const [stars, setStars] = useState([])
   const [clouds, setClouds] = useState([])
   const [particles, setParticles] = useState([])
+  const [celestialRotation, setCelestialRotation] = useState(0)
 
   useEffect(() => {
-    // Déterminer le moment de la journée
+    // Déterminer le moment de la journée ET la rotation
     const updateTimeOfDay = () => {
-      const hour = new Date().getHours()
+      const now = new Date()
+      const hour = now.getHours()
+      const minutes = now.getMinutes()
+      
+      // Calculer l'heure exacte en décimal (ex: 14h30 = 14.5)
+      const exactHour = hour + minutes / 60
+      
+      // Calculer l'angle de rotation (0h = 0°, 6h = 90°, 12h = 180°, 18h = 270°)
+      // On fait tourner sur 24h (360°)
+      const angle = (exactHour / 24) * 360
+      setCelestialRotation(angle)
+      
+      // Déterminer le moment de la journée pour les couleurs
       if (hour >= 5 && hour < 12) setTimeOfDay('dawn')
       else if (hour >= 12 && hour < 18) setTimeOfDay('day')
       else if (hour >= 18 && hour < 22) setTimeOfDay('dusk')
@@ -82,11 +95,19 @@ export default function DynamicBackground() {
         ))}
       </div>
 
-      {/* Soleil */}
-      <div className="celestial-body sun" />
-
-      {/* Lune */}
-      <div className="celestial-body moon" />
+      {/* Container de rotation pour soleil/lune (style Minecraft) */}
+      <div 
+        className="celestial-orbit" 
+        style={{ 
+          transform: `rotate(${celestialRotation}deg)` 
+        }}
+      >
+        {/* Soleil - positionné sur l'orbite */}
+        <div className="celestial-body sun" />
+        
+        {/* Lune - à l'opposé du soleil (180°) */}
+        <div className="celestial-body moon" />
+      </div>
 
       {/* Nuages */}
       <div className="clouds-container">
