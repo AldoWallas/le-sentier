@@ -120,7 +120,7 @@ export default function HeroSection({ character, stats, dayCount, onSignOut }) {
 
         <div className="layer-character">
           <CharacterSprite 
-            characterClass={character?.class} 
+            characterClass="randonneur" 
             animation="walk" 
           />
         </div>

@@ -5,12 +5,18 @@
   height: 14px; /* Hauteur réelle du sprite */
   position: relative;
   image-rendering: pixelated;
+  /* CRITIQUE : Aucun background visible */
+  background: transparent !important;
 }
 
 .sprite-frame {
   width: 100%;
   height: 100%;
   position: relative;
+  /* CRITIQUE : Aucun background visible */
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
 }
 
 .sprite-pixels {
@@ -19,175 +25,112 @@
   position: absolute;
   top: 0;
   left: 0;
+  /* CRITIQUE : Aucun background visible */
+  background: transparent !important;
 }
 
-/* ===== CHEVALIER - FRAME 0 ===== */
-/* Coordonnées recalculées : X-16, Y-8 pour commencer à (0,0) */
+/* ===== RANDONNEUR MODERNE - FRAME 0 (pied gauche en avant) ===== */
+/* Bonnet rouge, cheveux bruns, gilet bleu, pantalon gris */
 
-.character-sprite.chevalier .sprite-frame.frame-0 .sprite-pixels {
+.character-sprite.randonneur .sprite-frame.frame-0 .sprite-pixels {
   box-shadow:
-    /* Casque (Y=0) */
-    4px 0px 0 0 #5a5a5a,
-    5px 0px 0 0 #5a5a5a,
-    6px 0px 0 0 #5a5a5a,
+    /* Bonnet rouge (Y=0-1) */
+    3px 0px 0 0 #c94a3a, 4px 0px 0 0 #c94a3a, 5px 0px 0 0 #c94a3a, 6px 0px 0 0 #c94a3a,
+    2px 1px 0 0 #c94a3a, 3px 1px 0 0 #d95a4a, 4px 1px 0 0 #d95a4a, 5px 1px 0 0 #d95a4a, 6px 1px 0 0 #d95a4a, 7px 1px 0 0 #c94a3a,
     
-    /* Casque (Y=1) */
-    3px 1px 0 0 #5a5a5a,
-    4px 1px 0 0 #8a8a8a,
-    5px 1px 0 0 #8a8a8a,
-    6px 1px 0 0 #8a8a8a,
-    7px 1px 0 0 #5a5a5a,
-    
-    /* Visière (Y=2) */
-    4px 2px 0 0 #2a2a2a,
-    5px 2px 0 0 #2a2a2a,
-    6px 2px 0 0 #2a2a2a,
+    /* Cheveux bruns (Y=2) */
+    3px 2px 0 0 #4a3a2a, 4px 2px 0 0 #5a4a3a, 5px 2px 0 0 #5a4a3a, 6px 2px 0 0 #4a3a2a,
     
     /* Visage (Y=3) */
-    3px 3px 0 0 #8a8a8a,
-    4px 3px 0 0 #ffc89d,
-    5px 3px 0 0 #ffc89d,
-    6px 3px 0 0 #ffc89d,
-    7px 3px 0 0 #8a8a8a,
+    3px 3px 0 0 #5a4a3a, 4px 3px 0 0 #ffc89d, 5px 3px 0 0 #ffc89d, 6px 3px 0 0 #ffc89d, 7px 3px 0 0 #5a4a3a,
     
-    /* Épaules (Y=4) */
-    2px 4px 0 0 #4a6fa5,
-    3px 4px 0 0 #5a7fb5,
-    4px 4px 0 0 #ffc89d,
-    5px 4px 0 0 #ffc89d,
-    6px 4px 0 0 #ffc89d,
-    7px 4px 0 0 #5a7fb5,
-    8px 4px 0 0 #4a6fa5,
+    /* Épaules + gilet bleu (Y=4) */
+    2px 4px 0 0 #3a5a8a, 3px 4px 0 0 #4a6a9a, 4px 4px 0 0 #ffc89d, 5px 4px 0 0 #ffc89d, 6px 4px 0 0 #4a6a9a, 7px 4px 0 0 #3a5a8a,
     
-    /* Torse (Y=5) */
-    2px 5px 0 0 #4a6fa5,
-    3px 5px 0 0 #5a7fb5,
-    4px 5px 0 0 #6a8fc5,
-    5px 5px 0 0 #6a8fc5,
-    6px 5px 0 0 #6a8fc5,
-    7px 5px 0 0 #5a7fb5,
-    8px 5px 0 0 #4a6fa5,
+    /* Torse bleu (Y=5) */
+    2px 5px 0 0 #3a5a8a, 3px 5px 0 0 #4a6a9a, 4px 5px 0 0 #4a6a9a, 5px 5px 0 0 #4a6a9a, 6px 5px 0 0 #4a6a9a, 7px 5px 0 0 #3a5a8a,
     
-    /* Torse (Y=6) */
-    3px 6px 0 0 #5a7fb5,
-    4px 6px 0 0 #6a8fc5,
-    5px 6px 0 0 #6a8fc5,
-    6px 6px 0 0 #6a8fc5,
-    7px 6px 0 0 #5a7fb5,
+    /* Torse bleu (Y=6) */
+    3px 6px 0 0 #4a6a9a, 4px 6px 0 0 #3a5a8a, 5px 6px 0 0 #3a5a8a, 6px 6px 0 0 #4a6a9a,
     
     /* Bras (Y=7) */
-    1px 7px 0 0 #4a6fa5,
-    2px 7px 0 0 #5a7fb5,
-    3px 7px 0 0 #5a7fb5,
-    4px 7px 0 0 #6a8fc5,
-    5px 7px 0 0 #6a8fc5,
-    6px 7px 0 0 #6a8fc5,
-    7px 7px 0 0 #5a7fb5,
-    8px 7px 0 0 #5a7fb5,
-    9px 7px 0 0 #4a6fa5,
+    1px 7px 0 0 #4a6a9a, 2px 7px 0 0 #4a6a9a, 3px 7px 0 0 #3a5a8a, 4px 7px 0 0 #3a5a8a, 5px 7px 0 0 #3a5a8a, 6px 7px 0 0 #3a5a8a, 7px 7px 0 0 #4a6a9a, 8px 7px 0 0 #4a6a9a,
     
     /* Mains (Y=8) */
-    0px 8px 0 0 #ffc89d,
-    1px 8px 0 0 #ffc89d,
-    3px 8px 0 0 #5a7fb5,
-    4px 8px 0 0 #4a6fa5,
-    5px 8px 0 0 #4a6fa5,
-    6px 8px 0 0 #4a6fa5,
-    7px 8px 0 0 #5a7fb5,
-    8px 8px 0 0 #ffc89d,
-    9px 8px 0 0 #ffc89d,
+    0px 8px 0 0 #ffc89d, 1px 8px 0 0 #ffc89d, 3px 8px 0 0 #3a5a8a, 4px 8px 0 0 #2a4a7a, 5px 8px 0 0 #2a4a7a, 6px 8px 0 0 #3a5a8a, 8px 8px 0 0 #ffc89d, 9px 8px 0 0 #ffc89d,
     
-    /* Hanches (Y=9) */
-    3px 9px 0 0 #4a6fa5,
-    4px 9px 0 0 #5a7fb5,
-    5px 9px 0 0 #5a7fb5,
-    6px 9px 0 0 #5a7fb5,
-    7px 9px 0 0 #4a6fa5,
+    /* Ceinture noire (Y=9) */
+    3px 9px 0 0 #2a2a2a, 4px 9px 0 0 #3a3a3a, 5px 9px 0 0 #3a3a3a, 6px 9px 0 0 #2a2a2a,
     
-    /* Jambes (Y=10) - pied gauche en avant */
-    2px 10px 0 0 #4a6fa5,
-    3px 10px 0 0 #5a7fb5,
-    4px 10px 0 0 #5a7fb5,
-    6px 10px 0 0 #5a7fb5,
-    7px 10px 0 0 #4a6fa5,
+    /* Jambes grises (Y=10) - pied gauche en avant */
+    2px 10px 0 0 #4a4a4a, 3px 10px 0 0 #5a5a5a, 4px 10px 0 0 #5a5a5a, 6px 10px 0 0 #5a5a5a, 7px 10px 0 0 #4a4a4a,
     
     /* Jambes (Y=11) */
-    2px 11px 0 0 #4a6fa5,
-    3px 11px 0 0 #5a7fb5,
-    7px 11px 0 0 #5a7fb5,
-    8px 11px 0 0 #4a6fa5,
+    2px 11px 0 0 #4a4a4a, 3px 11px 0 0 #5a5a5a, 7px 11px 0 0 #5a5a5a, 8px 11px 0 0 #4a4a4a,
     
     /* Jambes (Y=12) */
-    1px 12px 0 0 #4a6fa5,
-    2px 12px 0 0 #5a7fb5,
-    8px 12px 0 0 #5a7fb5,
-    9px 12px 0 0 #4a6fa5,
+    1px 12px 0 0 #4a4a4a, 2px 12px 0 0 #5a5a5a, 8px 12px 0 0 #5a5a5a, 9px 12px 0 0 #4a4a4a,
     
-    /* Bottes (Y=13) */
-    1px 13px 0 0 #3a3a3a,
-    2px 13px 0 0 #3a3a3a,
-    8px 13px 0 0 #3a3a3a,
-    9px 13px 0 0 #3a3a3a;
+    /* Chaussures rouges (Y=13) */
+    1px 13px 0 0 #c94a3a, 2px 13px 0 0 #c94a3a, 8px 13px 0 0 #c94a3a, 9px 13px 0 0 #c94a3a;
 }
 
 /* ===== FRAME 1 (pieds au sol) ===== */
 
-.character-sprite.chevalier .sprite-frame.frame-1 .sprite-pixels {
+.character-sprite.randonneur .sprite-frame.frame-1 .sprite-pixels {
   box-shadow:
-    4px 0px 0 0 #5a5a5a, 5px 0px 0 0 #5a5a5a, 6px 0px 0 0 #5a5a5a,
-    3px 1px 0 0 #5a5a5a, 4px 1px 0 0 #8a8a8a, 5px 1px 0 0 #8a8a8a, 6px 1px 0 0 #8a8a8a, 7px 1px 0 0 #5a5a5a,
-    4px 2px 0 0 #2a2a2a, 5px 2px 0 0 #2a2a2a, 6px 2px 0 0 #2a2a2a,
-    3px 3px 0 0 #8a8a8a, 4px 3px 0 0 #ffc89d, 5px 3px 0 0 #ffc89d, 6px 3px 0 0 #ffc89d, 7px 3px 0 0 #8a8a8a,
-    2px 4px 0 0 #4a6fa5, 3px 4px 0 0 #5a7fb5, 4px 4px 0 0 #ffc89d, 5px 4px 0 0 #ffc89d, 6px 4px 0 0 #ffc89d, 7px 4px 0 0 #5a7fb5, 8px 4px 0 0 #4a6fa5,
-    2px 5px 0 0 #4a6fa5, 3px 5px 0 0 #5a7fb5, 4px 5px 0 0 #6a8fc5, 5px 5px 0 0 #6a8fc5, 6px 5px 0 0 #6a8fc5, 7px 5px 0 0 #5a7fb5, 8px 5px 0 0 #4a6fa5,
-    3px 6px 0 0 #5a7fb5, 4px 6px 0 0 #6a8fc5, 5px 6px 0 0 #6a8fc5, 6px 6px 0 0 #6a8fc5, 7px 6px 0 0 #5a7fb5,
-    1px 7px 0 0 #4a6fa5, 2px 7px 0 0 #5a7fb5, 3px 7px 0 0 #5a7fb5, 4px 7px 0 0 #6a8fc5, 5px 7px 0 0 #6a8fc5, 6px 7px 0 0 #6a8fc5, 7px 7px 0 0 #5a7fb5, 8px 7px 0 0 #5a7fb5, 9px 7px 0 0 #4a6fa5,
-    0px 8px 0 0 #ffc89d, 1px 8px 0 0 #ffc89d, 3px 8px 0 0 #5a7fb5, 4px 8px 0 0 #4a6fa5, 5px 8px 0 0 #4a6fa5, 6px 8px 0 0 #4a6fa5, 7px 8px 0 0 #5a7fb5, 8px 8px 0 0 #ffc89d, 9px 8px 0 0 #ffc89d,
-    3px 9px 0 0 #4a6fa5, 4px 9px 0 0 #5a7fb5, 5px 9px 0 0 #5a7fb5, 6px 9px 0 0 #5a7fb5, 7px 9px 0 0 #4a6fa5,
-    /* Pieds au sol */
-    3px 10px 0 0 #4a6fa5, 4px 10px 0 0 #5a7fb5, 5px 10px 0 0 #5a7fb5, 6px 10px 0 0 #5a7fb5, 7px 10px 0 0 #4a6fa5,
-    3px 11px 0 0 #4a6fa5, 4px 11px 0 0 #5a7fb5, 6px 11px 0 0 #5a7fb5, 7px 11px 0 0 #4a6fa5,
-    3px 12px 0 0 #4a6fa5, 4px 12px 0 0 #5a7fb5, 6px 12px 0 0 #5a7fb5, 7px 12px 0 0 #4a6fa5,
-    3px 13px 0 0 #3a3a3a, 4px 13px 0 0 #3a3a3a, 6px 13px 0 0 #3a3a3a, 7px 13px 0 0 #3a3a3a;
+    3px 0px 0 0 #c94a3a, 4px 0px 0 0 #c94a3a, 5px 0px 0 0 #c94a3a, 6px 0px 0 0 #c94a3a,
+    2px 1px 0 0 #c94a3a, 3px 1px 0 0 #d95a4a, 4px 1px 0 0 #d95a4a, 5px 1px 0 0 #d95a4a, 6px 1px 0 0 #d95a4a, 7px 1px 0 0 #c94a3a,
+    3px 2px 0 0 #4a3a2a, 4px 2px 0 0 #5a4a3a, 5px 2px 0 0 #5a4a3a, 6px 2px 0 0 #4a3a2a,
+    3px 3px 0 0 #5a4a3a, 4px 3px 0 0 #ffc89d, 5px 3px 0 0 #ffc89d, 6px 3px 0 0 #ffc89d, 7px 3px 0 0 #5a4a3a,
+    2px 4px 0 0 #3a5a8a, 3px 4px 0 0 #4a6a9a, 4px 4px 0 0 #ffc89d, 5px 4px 0 0 #ffc89d, 6px 4px 0 0 #4a6a9a, 7px 4px 0 0 #3a5a8a,
+    2px 5px 0 0 #3a5a8a, 3px 5px 0 0 #4a6a9a, 4px 5px 0 0 #4a6a9a, 5px 5px 0 0 #4a6a9a, 6px 5px 0 0 #4a6a9a, 7px 5px 0 0 #3a5a8a,
+    3px 6px 0 0 #4a6a9a, 4px 6px 0 0 #3a5a8a, 5px 6px 0 0 #3a5a8a, 6px 6px 0 0 #4a6a9a,
+    1px 7px 0 0 #4a6a9a, 2px 7px 0 0 #4a6a9a, 3px 7px 0 0 #3a5a8a, 4px 7px 0 0 #3a5a8a, 5px 7px 0 0 #3a5a8a, 6px 7px 0 0 #3a5a8a, 7px 7px 0 0 #4a6a9a, 8px 7px 0 0 #4a6a9a,
+    0px 8px 0 0 #ffc89d, 1px 8px 0 0 #ffc89d, 3px 8px 0 0 #3a5a8a, 4px 8px 0 0 #2a4a7a, 5px 8px 0 0 #2a4a7a, 6px 8px 0 0 #3a5a8a, 8px 8px 0 0 #ffc89d, 9px 8px 0 0 #ffc89d,
+    3px 9px 0 0 #2a2a2a, 4px 9px 0 0 #3a3a3a, 5px 9px 0 0 #3a3a3a, 6px 9px 0 0 #2a2a2a,
+    3px 10px 0 0 #4a4a4a, 4px 10px 0 0 #5a5a5a, 5px 10px 0 0 #5a5a5a, 6px 10px 0 0 #5a5a5a, 7px 10px 0 0 #4a4a4a,
+    3px 11px 0 0 #4a4a4a, 4px 11px 0 0 #5a5a5a, 6px 11px 0 0 #5a5a5a, 7px 11px 0 0 #4a4a4a,
+    3px 12px 0 0 #4a4a4a, 4px 12px 0 0 #5a5a5a, 6px 12px 0 0 #5a5a5a, 7px 12px 0 0 #4a4a4a,
+    3px 13px 0 0 #c94a3a, 4px 13px 0 0 #c94a3a, 6px 13px 0 0 #c94a3a, 7px 13px 0 0 #c94a3a;
 }
 
 /* ===== FRAME 2 (pied droit en avant) ===== */
 
-.character-sprite.chevalier .sprite-frame.frame-2 .sprite-pixels {
+.character-sprite.randonneur .sprite-frame.frame-2 .sprite-pixels {
   box-shadow:
-    4px 0px 0 0 #5a5a5a, 5px 0px 0 0 #5a5a5a, 6px 0px 0 0 #5a5a5a,
-    3px 1px 0 0 #5a5a5a, 4px 1px 0 0 #8a8a8a, 5px 1px 0 0 #8a8a8a, 6px 1px 0 0 #8a8a8a, 7px 1px 0 0 #5a5a5a,
-    4px 2px 0 0 #2a2a2a, 5px 2px 0 0 #2a2a2a, 6px 2px 0 0 #2a2a2a,
-    3px 3px 0 0 #8a8a8a, 4px 3px 0 0 #ffc89d, 5px 3px 0 0 #ffc89d, 6px 3px 0 0 #ffc89d, 7px 3px 0 0 #8a8a8a,
-    2px 4px 0 0 #4a6fa5, 3px 4px 0 0 #5a7fb5, 4px 4px 0 0 #ffc89d, 5px 4px 0 0 #ffc89d, 6px 4px 0 0 #ffc89d, 7px 4px 0 0 #5a7fb5, 8px 4px 0 0 #4a6fa5,
-    2px 5px 0 0 #4a6fa5, 3px 5px 0 0 #5a7fb5, 4px 5px 0 0 #6a8fc5, 5px 5px 0 0 #6a8fc5, 6px 5px 0 0 #6a8fc5, 7px 5px 0 0 #5a7fb5, 8px 5px 0 0 #4a6fa5,
-    3px 6px 0 0 #5a7fb5, 4px 6px 0 0 #6a8fc5, 5px 6px 0 0 #6a8fc5, 6px 6px 0 0 #6a8fc5, 7px 6px 0 0 #5a7fb5,
-    1px 7px 0 0 #4a6fa5, 2px 7px 0 0 #5a7fb5, 3px 7px 0 0 #5a7fb5, 4px 7px 0 0 #6a8fc5, 5px 7px 0 0 #6a8fc5, 6px 7px 0 0 #6a8fc5, 7px 7px 0 0 #5a7fb5, 8px 7px 0 0 #5a7fb5, 9px 7px 0 0 #4a6fa5,
-    0px 8px 0 0 #ffc89d, 1px 8px 0 0 #ffc89d, 3px 8px 0 0 #5a7fb5, 4px 8px 0 0 #4a6fa5, 5px 8px 0 0 #4a6fa5, 6px 8px 0 0 #4a6fa5, 7px 8px 0 0 #5a7fb5, 8px 8px 0 0 #ffc89d, 9px 8px 0 0 #ffc89d,
-    3px 9px 0 0 #4a6fa5, 4px 9px 0 0 #5a7fb5, 5px 9px 0 0 #5a7fb5, 6px 9px 0 0 #5a7fb5, 7px 9px 0 0 #4a6fa5,
-    /* Pied droit en avant (inversé) */
-    3px 10px 0 0 #4a6fa5, 4px 10px 0 0 #5a7fb5, 6px 10px 0 0 #5a7fb5, 7px 10px 0 0 #5a7fb5, 8px 10px 0 0 #4a6fa5,
-    2px 11px 0 0 #4a6fa5, 3px 11px 0 0 #5a7fb5, 7px 11px 0 0 #5a7fb5, 8px 11px 0 0 #4a6fa5,
-    1px 12px 0 0 #4a6fa5, 2px 12px 0 0 #5a7fb5, 8px 12px 0 0 #5a7fb5, 9px 12px 0 0 #4a6fa5,
-    1px 13px 0 0 #3a3a3a, 2px 13px 0 0 #3a3a3a, 8px 13px 0 0 #3a3a3a, 9px 13px 0 0 #3a3a3a;
+    3px 0px 0 0 #c94a3a, 4px 0px 0 0 #c94a3a, 5px 0px 0 0 #c94a3a, 6px 0px 0 0 #c94a3a,
+    2px 1px 0 0 #c94a3a, 3px 1px 0 0 #d95a4a, 4px 1px 0 0 #d95a4a, 5px 1px 0 0 #d95a4a, 6px 1px 0 0 #d95a4a, 7px 1px 0 0 #c94a3a,
+    3px 2px 0 0 #4a3a2a, 4px 2px 0 0 #5a4a3a, 5px 2px 0 0 #5a4a3a, 6px 2px 0 0 #4a3a2a,
+    3px 3px 0 0 #5a4a3a, 4px 3px 0 0 #ffc89d, 5px 3px 0 0 #ffc89d, 6px 3px 0 0 #ffc89d, 7px 3px 0 0 #5a4a3a,
+    2px 4px 0 0 #3a5a8a, 3px 4px 0 0 #4a6a9a, 4px 4px 0 0 #ffc89d, 5px 4px 0 0 #ffc89d, 6px 4px 0 0 #4a6a9a, 7px 4px 0 0 #3a5a8a,
+    2px 5px 0 0 #3a5a8a, 3px 5px 0 0 #4a6a9a, 4px 5px 0 0 #4a6a9a, 5px 5px 0 0 #4a6a9a, 6px 5px 0 0 #4a6a9a, 7px 5px 0 0 #3a5a8a,
+    3px 6px 0 0 #4a6a9a, 4px 6px 0 0 #3a5a8a, 5px 6px 0 0 #3a5a8a, 6px 6px 0 0 #4a6a9a,
+    1px 7px 0 0 #4a6a9a, 2px 7px 0 0 #4a6a9a, 3px 7px 0 0 #3a5a8a, 4px 7px 0 0 #3a5a8a, 5px 7px 0 0 #3a5a8a, 6px 7px 0 0 #3a5a8a, 7px 7px 0 0 #4a6a9a, 8px 7px 0 0 #4a6a9a,
+    0px 8px 0 0 #ffc89d, 1px 8px 0 0 #ffc89d, 3px 8px 0 0 #3a5a8a, 4px 8px 0 0 #2a4a7a, 5px 8px 0 0 #2a4a7a, 6px 8px 0 0 #3a5a8a, 8px 8px 0 0 #ffc89d, 9px 8px 0 0 #ffc89d,
+    3px 9px 0 0 #2a2a2a, 4px 9px 0 0 #3a3a3a, 5px 9px 0 0 #3a3a3a, 6px 9px 0 0 #2a2a2a,
+    3px 10px 0 0 #4a4a4a, 4px 10px 0 0 #5a5a5a, 6px 10px 0 0 #5a5a5a, 7px 10px 0 0 #5a5a5a, 8px 10px 0 0 #4a4a4a,
+    2px 11px 0 0 #4a4a4a, 3px 11px 0 0 #5a5a5a, 7px 11px 0 0 #5a5a5a, 8px 11px 0 0 #4a4a4a,
+    1px 12px 0 0 #4a4a4a, 2px 12px 0 0 #5a5a5a, 8px 12px 0 0 #5a5a5a, 9px 12px 0 0 #4a4a4a,
+    1px 13px 0 0 #c94a3a, 2px 13px 0 0 #c94a3a, 8px 13px 0 0 #c94a3a, 9px 13px 0 0 #c94a3a;
 }
 
 /* ===== FRAME 3 (contact) ===== */
 
-.character-sprite.chevalier .sprite-frame.frame-3 .sprite-pixels {
+.character-sprite.randonneur .sprite-frame.frame-3 .sprite-pixels {
   box-shadow:
-    4px 0px 0 0 #5a5a5a, 5px 0px 0 0 #5a5a5a, 6px 0px 0 0 #5a5a5a,
-    3px 1px 0 0 #5a5a5a, 4px 1px 0 0 #8a8a8a, 5px 1px 0 0 #8a8a8a, 6px 1px 0 0 #8a8a8a, 7px 1px 0 0 #5a5a5a,
-    4px 2px 0 0 #2a2a2a, 5px 2px 0 0 #2a2a2a, 6px 2px 0 0 #2a2a2a,
-    3px 3px 0 0 #8a8a8a, 4px 3px 0 0 #ffc89d, 5px 3px 0 0 #ffc89d, 6px 3px 0 0 #ffc89d, 7px 3px 0 0 #8a8a8a,
-    2px 4px 0 0 #4a6fa5, 3px 4px 0 0 #5a7fb5, 4px 4px 0 0 #ffc89d, 5px 4px 0 0 #ffc89d, 6px 4px 0 0 #ffc89d, 7px 4px 0 0 #5a7fb5, 8px 4px 0 0 #4a6fa5,
-    2px 5px 0 0 #4a6fa5, 3px 5px 0 0 #5a7fb5, 4px 5px 0 0 #6a8fc5, 5px 5px 0 0 #6a8fc5, 6px 5px 0 0 #6a8fc5, 7px 5px 0 0 #5a7fb5, 8px 5px 0 0 #4a6fa5,
-    3px 6px 0 0 #5a7fb5, 4px 6px 0 0 #6a8fc5, 5px 6px 0 0 #6a8fc5, 6px 6px 0 0 #6a8fc5, 7px 6px 0 0 #5a7fb5,
-    1px 7px 0 0 #4a6fa5, 2px 7px 0 0 #5a7fb5, 3px 7px 0 0 #5a7fb5, 4px 7px 0 0 #6a8fc5, 5px 7px 0 0 #6a8fc5, 6px 7px 0 0 #6a8fc5, 7px 7px 0 0 #5a7fb5, 8px 7px 0 0 #5a7fb5, 9px 7px 0 0 #4a6fa5,
-    0px 8px 0 0 #ffc89d, 1px 8px 0 0 #ffc89d, 3px 8px 0 0 #5a7fb5, 4px 8px 0 0 #4a6fa5, 5px 8px 0 0 #4a6fa5, 6px 8px 0 0 #4a6fa5, 7px 8px 0 0 #5a7fb5, 8px 8px 0 0 #ffc89d, 9px 8px 0 0 #ffc89d,
-    3px 9px 0 0 #4a6fa5, 4px 9px 0 0 #5a7fb5, 5px 9px 0 0 #5a7fb5, 6px 9px 0 0 #5a7fb5, 7px 9px 0 0 #4a6fa5,
-    3px 10px 0 0 #4a6fa5, 4px 10px 0 0 #5a7fb5, 5px 10px 0 0 #5a7fb5, 6px 10px 0 0 #5a7fb5, 7px 10px 0 0 #4a6fa5,
-    3px 11px 0 0 #4a6fa5, 4px 11px 0 0 #5a7fb5, 6px 11px 0 0 #5a7fb5, 7px 11px 0 0 #4a6fa5,
-    3px 12px 0 0 #4a6fa5, 4px 12px 0 0 #5a7fb5, 6px 12px 0 0 #5a7fb5, 7px 12px 0 0 #4a6fa5,
-    3px 13px 0 0 #3a3a3a, 4px 13px 0 0 #3a3a3a, 6px 13px 0 0 #3a3a3a, 7px 13px 0 0 #3a3a3a;
+    3px 0px 0 0 #c94a3a, 4px 0px 0 0 #c94a3a, 5px 0px 0 0 #c94a3a, 6px 0px 0 0 #c94a3a,
+    2px 1px 0 0 #c94a3a, 3px 1px 0 0 #d95a4a, 4px 1px 0 0 #d95a4a, 5px 1px 0 0 #d95a4a, 6px 1px 0 0 #d95a4a, 7px 1px 0 0 #c94a3a,
+    3px 2px 0 0 #4a3a2a, 4px 2px 0 0 #5a4a3a, 5px 2px 0 0 #5a4a3a, 6px 2px 0 0 #4a3a2a,
+    3px 3px 0 0 #5a4a3a, 4px 3px 0 0 #ffc89d, 5px 3px 0 0 #ffc89d, 6px 3px 0 0 #ffc89d, 7px 3px 0 0 #5a4a3a,
+    2px 4px 0 0 #3a5a8a, 3px 4px 0 0 #4a6a9a, 4px 4px 0 0 #ffc89d, 5px 4px 0 0 #ffc89d, 6px 4px 0 0 #4a6a9a, 7px 4px 0 0 #3a5a8a,
+    2px 5px 0 0 #3a5a8a, 3px 5px 0 0 #4a6a9a, 4px 5px 0 0 #4a6a9a, 5px 5px 0 0 #4a6a9a, 6px 5px 0 0 #4a6a9a, 7px 5px 0 0 #3a5a8a,
+    3px 6px 0 0 #4a6a9a, 4px 6px 0 0 #3a5a8a, 5px 6px 0 0 #3a5a8a, 6px 6px 0 0 #4a6a9a,
+    1px 7px 0 0 #4a6a9a, 2px 7px 0 0 #4a6a9a, 3px 7px 0 0 #3a5a8a, 4px 7px 0 0 #3a5a8a, 5px 7px 0 0 #3a5a8a, 6px 7px 0 0 #3a5a8a, 7px 7px 0 0 #4a6a9a, 8px 7px 0 0 #4a6a9a,
+    0px 8px 0 0 #ffc89d, 1px 8px 0 0 #ffc89d, 3px 8px 0 0 #3a5a8a, 4px 8px 0 0 #2a4a7a, 5px 8px 0 0 #2a4a7a, 6px 8px 0 0 #3a5a8a, 8px 8px 0 0 #ffc89d, 9px 8px 0 0 #ffc89d,
+    3px 9px 0 0 #2a2a2a, 4px 9px 0 0 #3a3a3a, 5px 9px 0 0 #3a3a3a, 6px 9px 0 0 #2a2a2a,
+    3px 10px 0 0 #4a4a4a, 4px 10px 0 0 #5a5a5a, 5px 10px 0 0 #5a5a5a, 6px 10px 0 0 #5a5a5a, 7px 10px 0 0 #4a4a4a,
+    3px 11px 0 0 #4a4a4a, 4px 11px 0 0 #5a5a5a, 6px 11px 0 0 #5a5a5a, 7px 11px 0 0 #4a4a4a,
+    3px 12px 0 0 #4a4a4a, 4px 12px 0 0 #5a5a5a, 6px 12px 0 0 #5a5a5a, 7px 12px 0 0 #4a4a4a,
+    3px 13px 0 0 #c94a3a, 4px 13px 0 0 #c94a3a, 6px 13px 0 0 #c94a3a, 7px 13px 0 0 #c94a3a;
 }

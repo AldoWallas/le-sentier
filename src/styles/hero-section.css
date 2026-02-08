@@ -349,17 +349,30 @@
   position: absolute;
   bottom: var(--horizon-height);
   left: 50%;
-  /* CORRECTION : Pas de background, transform-origin optimisé */
   transform: translateX(-50%) scale(4); /* Agrandi x4 */
   transform-origin: bottom center;
   z-index: 9;
-  /* CRITIQUE : Aucun background pour éviter le carré gris */
-  background: transparent;
+  /* CRITIQUE : Aucun background ET overflow hidden */
+  background: transparent !important;
+  overflow: visible; /* Permet aux pixels de dépasser */
 }
 
-/* S'assurer qu'aucun enfant n'a de background visible */
-.layer-character * {
-  background: transparent;
+/* FORCER les conteneurs à être invisibles */
+.layer-character .character-sprite {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.layer-character .sprite-frame {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.layer-character .sprite-pixels {
+  /* Seul cet élément a le droit d'avoir un box-shadow (le sprite) */
+  background: transparent !important;
 }
 
 /* ===== COUCHE 10 : UI OVERLAY ===== */
