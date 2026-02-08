@@ -144,7 +144,7 @@ export default function HeroSection({ character, stats, dayCount, onSignOut }) {
             <div className="scroll-text">Scroll pour voir tes quêtes</div>
           </div>
 
-          <div className="ui-version">v0.1.005</div>
+          <div className="ui-version">v0.1.006</div>
         </div>
       </section>
 
