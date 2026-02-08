@@ -1,0 +1,92 @@
+/* ===== HEART PARTICLE (émane du personnage) ===== */
+
+.heart-particle {
+  position: absolute;
+  /* POSITIONNEMENT : même position que le personnage + offset pour partir de la tête */
+  bottom: calc(var(--horizon-height) + 50px); /* +50px pour monter au niveau de la tête */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10; /* Juste au-dessus du personnage (z-index: 9) */
+  pointer-events: none;
+  opacity: 0;
+}
+
+.heart-particle.animating {
+  animation: heart-hybrid 2s ease-out forwards;
+}
+
+/* Animation hybride finale : pop + montée douce + fade simple */
+@keyframes heart-hybrid {
+  /* Démarrage : apparition avec pop */
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0) scale(0.3);
+  }
+  
+  /* Pop initial */
+  12% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-8px) scale(1.1);
+  }
+  
+  /* Stabilisation */
+  20% {
+    transform: translateX(-50%) translateY(-12px) scale(1);
+  }
+  
+  /* Ascension douce jusqu'à la fin */
+  90% {
+    opacity: 0.8;
+    transform: translateX(-50%) translateY(-55px) scale(1);
+  }
+  
+  /* Fade out simple sans changement de vitesse ni zoom */
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-60px) scale(1);
+  }
+}
+
+/* Sprite du cœur pixel art */
+.pixel-heart {
+  width: 5px;
+  height: 5px;
+  position: relative;
+  transform: scale(2.5); /* Agrandi x2.5 pour visibilité */
+  image-rendering: pixelated;
+}
+
+.pixel-heart-pixels {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Cœur pixel art 5x5 - ROUGE VIF */
+  box-shadow:
+    /* Ligne 1 (haut) */
+    1px 0px 0 0 #ff4444,
+    3px 0px 0 0 #ff4444,
+    
+    /* Ligne 2 */
+    0px 1px 0 0 #cc0000,
+    1px 1px 0 0 #ff4444,
+    2px 1px 0 0 #cc0000,
+    3px 1px 0 0 #ff4444,
+    4px 1px 0 0 #cc0000,
+    
+    /* Ligne 3 (milieu) */
+    0px 2px 0 0 #cc0000,
+    1px 2px 0 0 #ff4444,
+    2px 2px 0 0 #ff4444,
+    3px 2px 0 0 #ff4444,
+    4px 2px 0 0 #cc0000,
+    
+    /* Ligne 4 */
+    1px 3px 0 0 #cc0000,
+    2px 3px 0 0 #ff4444,
+    3px 3px 0 0 #cc0000,
+    
+    /* Ligne 5 (bas - pointe) */
+    2px 4px 0 0 #cc0000;
+}

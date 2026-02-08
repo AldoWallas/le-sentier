@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [quests, setQuests] = useState([])
   const [chapters, setChapters] = useState([])
   const [loading, setLoading] = useState(true)
+  const [triggerHeart, setTriggerHeart] = useState(0) // ← AJOUT : state pour déclencher le cœur
   
   // Modals
   const [taskModalOpen, setTaskModalOpen] = useState(false)
@@ -104,6 +105,9 @@ export default function Dashboard() {
       .eq('id', taskId)
 
     if (newStatus === 'completed' && character) {
+      // ← AJOUT : Déclencher le cœur quand une tâche est complétée
+      setTriggerHeart(prev => prev + 1)
+      
       const newXp = character.xp + task.xp
       const newLevel = calculateLevel(newXp)
       
@@ -381,7 +385,8 @@ export default function Dashboard() {
       character={character}
       stats={stats}
       dayCount={getDayCount()}
-       onSignOut={signOut}
+      onSignOut={signOut}
+      showHeart={triggerHeart}
     />
     
     <div className="dashboard-container">

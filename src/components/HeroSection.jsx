@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import CharacterSprite from './CharacterSprite'
+import HeartParticle from './HeartParticle'
 import '../styles/hero-section.css'
 
-export default function HeroSection({ character, stats, dayCount, onSignOut }) {
+export default function HeroSection({ character, stats, dayCount, onSignOut, showHeart }) {
   const [timeOfDay, setTimeOfDay] = useState('day')
   const [greeting, setGreeting] = useState('')
   const [fadeIn, setFadeIn] = useState(false)
+  const [hearts, setHearts] = useState([])
 
   useEffect(() => {
     const updateTime = () => {
@@ -33,6 +35,18 @@ export default function HeroSection({ character, stats, dayCount, onSignOut }) {
     
     return () => clearInterval(interval)
   }, [])
+
+  // Déclencher un cœur quand showHeart change
+  useEffect(() => {
+    if (showHeart) {
+      const newHeart = { id: Date.now() }
+      setHearts(prev => [...prev, newHeart])
+    }
+  }, [showHeart])
+
+  const removeHeart = (id) => {
+    setHearts(prev => prev.filter(h => h.id !== id))
+  }
 
   const getXpProgress = () => {
     if (!character) return 0
@@ -124,6 +138,14 @@ export default function HeroSection({ character, stats, dayCount, onSignOut }) {
             animation="walk" 
           />
         </div>
+
+        {/* HEARTS PARTICLES - Positionnés relativement au personnage */}
+        {hearts.map(heart => (
+          <HeartParticle 
+            key={heart.id}
+            onComplete={() => removeHeart(heart.id)}
+          />
+        ))}
 
         <div className="layer-ui-top">
           <div className="ui-top-left">
