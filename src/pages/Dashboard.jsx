@@ -10,6 +10,7 @@ import TaskModal from '../components/TaskModal'
 import QuestModal from '../components/QuestModal'
 import ChapterModal from '../components/ChapterModal'
 import DynamicBackground from '../components/DynamicBackground'
+import HeroSection from '../components/HeroSection'
 import '../styles/dashboard.css'
 
 export default function Dashboard() {
@@ -375,21 +376,15 @@ export default function Dashboard() {
   const stats = getStats()
 
   return (
-    <div className="dashboard">
-      <DynamicBackground />
-      
-      <div className="dashboard-container">
-        <Header 
-          greeting={getGreeting()}
-          dayCount={getDayCount()}
-          character={character}
-          classIcon={CLASS_ICONS[character?.class]}
-          xpProgress={getXpProgress()}
-          xpCurrent={character?.xp}
-          xpNext={getXpForNextLevel(character?.level)}
-          stats={stats}
-          onSignOut={signOut}
-        />
+  <div className="dashboard">
+    <HeroSection
+      character={character}
+      stats={stats}
+      dayCount={getDayCount()}
+       onSignOut={signOut}
+    />
+    
+    <div className="dashboard-container">
         
         <TaskSection 
           tasks={tasks.filter(t => !t.quest_id && !t.chapter_id)}
