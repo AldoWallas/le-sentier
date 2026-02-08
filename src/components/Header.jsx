@@ -1,6 +1,9 @@
 import '../styles/header.css'
+import '../styles/character-sprite.css'
+import CharacterSprite from './CharacterSprite'
 
-export default function Header({ 
+
+export default function Header({
   greeting, 
   dayCount, 
   character, 
@@ -24,7 +27,10 @@ export default function Header({
       </h1>
 
       <div className="character-hud">
-        <div className="character-sprite">{classIcon}</div>
+        <CharacterSprite
+            characterClass={character?.class}
+        animation="idle"
+            />
         <div className="character-info">
           <div className="character-name">
             {character?.name?.toUpperCase()}

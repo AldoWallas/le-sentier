@@ -1,0 +1,305 @@
+/* ===== ANIMATION DE COMPLÉTION DE TÂCHE ===== */
+
+.task-completion-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Particules d'explosion */
+.explosion-particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+  animation: explode 0.8s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) translateX(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) 
+               translateX(var(--velocity)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* XP qui monte */
+.xp-gained {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 18px;
+  color: #ffd700;
+  text-shadow: 
+    2px 2px 0 #000,
+    0 0 10px rgba(255, 215, 0, 0.8);
+  animation: float-up 1.5s ease-out forwards;
+  white-space: nowrap;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -150%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* ===== TÂCHE COMPLÉTÉE (avant disparition) ===== */
+
+.task-item.completing {
+  animation: task-complete-pulse 0.5s ease-out;
+}
+
+@keyframes task-complete-pulse {
+  0% {
+    transform: scale(1);
+    background: transparent;
+  }
+  50% {
+    transform: scale(1.05);
+    background: rgba(255, 215, 0, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    background: transparent;
+  }
+}
+
+/* Tâche qui disparaît (fade out) */
+.task-item.disappearing {
+  animation: fade-slide-out 0.5s ease-out forwards;
+}
+
+@keyframes fade-slide-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+    max-height: 100px;
+    margin-bottom: 12px;
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(20px);
+    max-height: 0;
+    margin-bottom: 0;
+    padding: 0;
+  }
+}
+
+/* ===== CHAPITRE/QUÊTE PRÊT À VALIDER ===== */
+
+.quest-header.ready-to-complete,
+.chapter-header.ready-to-complete {
+  position: relative;
+  animation: pulse-gold 2s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes pulse-gold {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(255, 215, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  }
+}
+
+.quest-header.ready-to-complete::after,
+.chapter-header.ready-to-complete::after {
+  content: '✨';
+  position: absolute;
+  right: 100px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.2);
+  }
+}
+
+/* ===== ANIMATION DE VALIDATION QUÊTE/CHAPITRE ===== */
+
+.quest-completion-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fade-in 0.3s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.quest-completion-content {
+  background: linear-gradient(135deg, #2d3748, #1a202c);
+  border: 4px solid #ffd700;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  max-width: 500px;
+  animation: bounce-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.quest-completion-emoji {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: spin-in 0.8s ease-out;
+}
+
+@keyframes spin-in {
+  0% {
+    transform: rotate(-360deg) scale(0);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.quest-completion-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 24px;
+  color: #ffd700;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.quest-completion-message {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.quest-completion-xp {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 32px;
+  color: #ffd700;
+  margin-bottom: 30px;
+  text-shadow: 
+    2px 2px 0 #000,
+    0 0 20px rgba(255, 215, 0, 0.8);
+  animation: pulse-scale 1s ease-in-out infinite;
+}
+
+@keyframes pulse-scale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.quest-completion-button {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  padding: 12px 24px;
+  background: #ffd700;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.quest-completion-button:hover {
+  transform: scale(1.1);
+}
+
+.quest-completion-button:active {
+  transform: scale(0.95);
+}
+
+/* Confettis pour grande validation */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #ffd700;
+  animation: confetti-fall 3s linear forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti:nth-child(2n) { background: #ff6b9d; }
+.confetti:nth-child(3n) { background: #4da6ff; }
+.confetti:nth-child(4n) { background: #7fff00; }
+.confetti:nth-child(5n) { background: #ff4500; }
