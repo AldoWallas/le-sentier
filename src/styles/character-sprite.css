@@ -1,19 +1,19 @@
-/* ===== CHARACTER SPRITE - PIXEL ART ===== */
+/* ===== CHARACTER SPRITE COMPACT ===== */
 
 .character-sprite {
-  width: 64px;
-  height: 64px;
+  width: 10px;  /* Largeur réelle du sprite */
+  height: 14px; /* Hauteur réelle du sprite */
   position: relative;
   image-rendering: pixelated;
 }
 
-.sprite-container {
+.sprite-frame {
   width: 100%;
   height: 100%;
   position: relative;
 }
 
-.sprite-pixel-art {
+.sprite-pixels {
   width: 1px;
   height: 1px;
   position: absolute;
@@ -21,256 +21,173 @@
   left: 0;
 }
 
-/* ===== CHEVALIER - IDLE FRAME 0 ===== */
-.character-sprite.chevalier .sprite-container.frame-0 .sprite-pixel-art {
+/* ===== CHEVALIER - FRAME 0 ===== */
+/* Coordonnées recalculées : X-16, Y-8 pour commencer à (0,0) */
+
+.character-sprite.chevalier .sprite-frame.frame-0 .sprite-pixels {
   box-shadow:
-    /* Casque (gris foncé/argent) */
-    20px 12px 0 0 #5a5a5a,
-    21px 12px 0 0 #5a5a5a,
-    22px 12px 0 0 #5a5a5a,
-    23px 12px 0 0 #5a5a5a,
-    19px 13px 0 0 #5a5a5a,
-    20px 13px 0 0 #8a8a8a,
-    21px 13px 0 0 #8a8a8a,
-    22px 13px 0 0 #8a8a8a,
-    23px 13px 0 0 #8a8a8a,
-    24px 13px 0 0 #5a5a5a,
+    /* Casque (Y=0) */
+    4px 0px 0 0 #5a5a5a,
+    5px 0px 0 0 #5a5a5a,
+    6px 0px 0 0 #5a5a5a,
     
-    /* Visière (noir) */
-    20px 14px 0 0 #2a2a2a,
-    21px 14px 0 0 #2a2a2a,
-    22px 14px 0 0 #2a2a2a,
-    23px 14px 0 0 #2a2a2a,
+    /* Casque (Y=1) */
+    3px 1px 0 0 #5a5a5a,
+    4px 1px 0 0 #8a8a8a,
+    5px 1px 0 0 #8a8a8a,
+    6px 1px 0 0 #8a8a8a,
+    7px 1px 0 0 #5a5a5a,
     
-    /* Tête/corps (peau + armure bleue) */
-    19px 15px 0 0 #8a8a8a,
-    20px 15px 0 0 #ffc89d,
-    21px 15px 0 0 #ffc89d,
-    22px 15px 0 0 #ffc89d,
-    23px 15px 0 0 #ffc89d,
-    24px 15px 0 0 #8a8a8a,
+    /* Visière (Y=2) */
+    4px 2px 0 0 #2a2a2a,
+    5px 2px 0 0 #2a2a2a,
+    6px 2px 0 0 #2a2a2a,
     
-    /* Épaules armure */
-    18px 16px 0 0 #4a6fa5,
-    19px 16px 0 0 #5a7fb5,
-    20px 16px 0 0 #ffc89d,
-    21px 16px 0 0 #ffc89d,
-    22px 16px 0 0 #ffc89d,
-    23px 16px 0 0 #ffc89d,
-    24px 16px 0 0 #5a7fb5,
-    25px 16px 0 0 #4a6fa5,
+    /* Visage (Y=3) */
+    3px 3px 0 0 #8a8a8a,
+    4px 3px 0 0 #ffc89d,
+    5px 3px 0 0 #ffc89d,
+    6px 3px 0 0 #ffc89d,
+    7px 3px 0 0 #8a8a8a,
     
-    /* Torse armure */
-    18px 17px 0 0 #4a6fa5,
-    19px 17px 0 0 #5a7fb5,
-    20px 17px 0 0 #6a8fc5,
-    21px 17px 0 0 #6a8fc5,
-    22px 17px 0 0 #6a8fc5,
-    23px 17px 0 0 #6a8fc5,
-    24px 17px 0 0 #5a7fb5,
-    25px 17px 0 0 #4a6fa5,
+    /* Épaules (Y=4) */
+    2px 4px 0 0 #4a6fa5,
+    3px 4px 0 0 #5a7fb5,
+    4px 4px 0 0 #ffc89d,
+    5px 4px 0 0 #ffc89d,
+    6px 4px 0 0 #ffc89d,
+    7px 4px 0 0 #5a7fb5,
+    8px 4px 0 0 #4a6fa5,
     
-    19px 18px 0 0 #5a7fb5,
-    20px 18px 0 0 #6a8fc5,
-    21px 18px 0 0 #6a8fc5,
-    22px 18px 0 0 #6a8fc5,
-    23px 18px 0 0 #6a8fc5,
-    24px 18px 0 0 #5a7fb5,
+    /* Torse (Y=5) */
+    2px 5px 0 0 #4a6fa5,
+    3px 5px 0 0 #5a7fb5,
+    4px 5px 0 0 #6a8fc5,
+    5px 5px 0 0 #6a8fc5,
+    6px 5px 0 0 #6a8fc5,
+    7px 5px 0 0 #5a7fb5,
+    8px 5px 0 0 #4a6fa5,
     
-    /* Bras */
-    17px 19px 0 0 #4a6fa5,
-    18px 19px 0 0 #5a7fb5,
-    19px 19px 0 0 #5a7fb5,
-    20px 19px 0 0 #6a8fc5,
-    21px 19px 0 0 #6a8fc5,
-    22px 19px 0 0 #6a8fc5,
-    23px 19px 0 0 #6a8fc5,
-    24px 19px 0 0 #5a7fb5,
-    25px 19px 0 0 #5a7fb5,
-    26px 19px 0 0 #4a6fa5,
+    /* Torse (Y=6) */
+    3px 6px 0 0 #5a7fb5,
+    4px 6px 0 0 #6a8fc5,
+    5px 6px 0 0 #6a8fc5,
+    6px 6px 0 0 #6a8fc5,
+    7px 6px 0 0 #5a7fb5,
     
-    /* Main gauche (épée) */
-    16px 20px 0 0 #8a8a8a,
-    17px 20px 0 0 #ffc89d,
-    18px 20px 0 0 #ffc89d,
+    /* Bras (Y=7) */
+    1px 7px 0 0 #4a6fa5,
+    2px 7px 0 0 #5a7fb5,
+    3px 7px 0 0 #5a7fb5,
+    4px 7px 0 0 #6a8fc5,
+    5px 7px 0 0 #6a8fc5,
+    6px 7px 0 0 #6a8fc5,
+    7px 7px 0 0 #5a7fb5,
+    8px 7px 0 0 #5a7fb5,
+    9px 7px 0 0 #4a6fa5,
     
-    /* Taille */
-    19px 20px 0 0 #5a7fb5,
-    20px 20px 0 0 #4a6fa5,
-    21px 20px 0 0 #4a6fa5,
-    22px 20px 0 0 #4a6fa5,
-    23px 20px 0 0 #4a6fa5,
-    24px 20px 0 0 #5a7fb5,
+    /* Mains (Y=8) */
+    0px 8px 0 0 #ffc89d,
+    1px 8px 0 0 #ffc89d,
+    3px 8px 0 0 #5a7fb5,
+    4px 8px 0 0 #4a6fa5,
+    5px 8px 0 0 #4a6fa5,
+    6px 8px 0 0 #4a6fa5,
+    7px 8px 0 0 #5a7fb5,
+    8px 8px 0 0 #ffc89d,
+    9px 8px 0 0 #ffc89d,
     
-    /* Main droite */
-    25px 20px 0 0 #ffc89d,
-    26px 20px 0 0 #ffc89d,
+    /* Hanches (Y=9) */
+    3px 9px 0 0 #4a6fa5,
+    4px 9px 0 0 #5a7fb5,
+    5px 9px 0 0 #5a7fb5,
+    6px 9px 0 0 #5a7fb5,
+    7px 9px 0 0 #4a6fa5,
     
-    /* Jambes armure */
-    19px 21px 0 0 #4a6fa5,
-    20px 21px 0 0 #5a7fb5,
-    21px 21px 0 0 #5a7fb5,
-    22px 21px 0 0 #5a7fb5,
-    23px 21px 0 0 #5a7fb5,
-    24px 21px 0 0 #4a6fa5,
+    /* Jambes (Y=10) - pied gauche en avant */
+    2px 10px 0 0 #4a6fa5,
+    3px 10px 0 0 #5a7fb5,
+    4px 10px 0 0 #5a7fb5,
+    6px 10px 0 0 #5a7fb5,
+    7px 10px 0 0 #4a6fa5,
     
-    19px 22px 0 0 #4a6fa5,
-    20px 22px 0 0 #5a7fb5,
-    21px 22px 0 0 #5a7fb5,
-    22px 22px 0 0 #5a7fb5,
-    23px 22px 0 0 #5a7fb5,
-    24px 22px 0 0 #4a6fa5,
+    /* Jambes (Y=11) */
+    2px 11px 0 0 #4a6fa5,
+    3px 11px 0 0 #5a7fb5,
+    7px 11px 0 0 #5a7fb5,
+    8px 11px 0 0 #4a6fa5,
     
-    /* Jambes séparées */
-    19px 23px 0 0 #4a6fa5,
-    20px 23px 0 0 #5a7fb5,
-    22px 23px 0 0 #5a7fb5,
-    23px 23px 0 0 #4a6fa5,
+    /* Jambes (Y=12) */
+    1px 12px 0 0 #4a6fa5,
+    2px 12px 0 0 #5a7fb5,
+    8px 12px 0 0 #5a7fb5,
+    9px 12px 0 0 #4a6fa5,
     
-    19px 24px 0 0 #4a6fa5,
-    20px 24px 0 0 #5a7fb5,
-    22px 24px 0 0 #5a7fb5,
-    23px 24px 0 0 #4a6fa5,
-    
-    /* Bottes */
-    19px 25px 0 0 #3a3a3a,
-    20px 25px 0 0 #3a3a3a,
-    22px 25px 0 0 #3a3a3a,
-    23px 25px 0 0 #3a3a3a;
+    /* Bottes (Y=13) */
+    1px 13px 0 0 #3a3a3a,
+    2px 13px 0 0 #3a3a3a,
+    8px 13px 0 0 #3a3a3a,
+    9px 13px 0 0 #3a3a3a;
 }
 
-/* ===== CHEVALIER - IDLE FRAME 1 (léger mouvement) ===== */
-.character-sprite.chevalier .sprite-container.frame-1 .sprite-pixel-art {
+/* ===== FRAME 1 (pieds au sol) ===== */
+
+.character-sprite.chevalier .sprite-frame.frame-1 .sprite-pixels {
   box-shadow:
-    /* Identique au frame 0 mais décalé de 1px vers le haut pour respiration */
-    20px 11px 0 0 #5a5a5a,
-    21px 11px 0 0 #5a5a5a,
-    22px 11px 0 0 #5a5a5a,
-    23px 11px 0 0 #5a5a5a,
-    19px 12px 0 0 #5a5a5a,
-    20px 12px 0 0 #8a8a8a,
-    21px 12px 0 0 #8a8a8a,
-    22px 12px 0 0 #8a8a8a,
-    23px 12px 0 0 #8a8a8a,
-    24px 12px 0 0 #5a5a5a,
-    20px 13px 0 0 #2a2a2a,
-    21px 13px 0 0 #2a2a2a,
-    22px 13px 0 0 #2a2a2a,
-    23px 13px 0 0 #2a2a2a,
-    19px 14px 0 0 #8a8a8a,
-    20px 14px 0 0 #ffc89d,
-    21px 14px 0 0 #ffc89d,
-    22px 14px 0 0 #ffc89d,
-    23px 14px 0 0 #ffc89d,
-    24px 14px 0 0 #8a8a8a,
-    18px 15px 0 0 #4a6fa5,
-    19px 15px 0 0 #5a7fb5,
-    20px 15px 0 0 #ffc89d,
-    21px 15px 0 0 #ffc89d,
-    22px 15px 0 0 #ffc89d,
-    23px 15px 0 0 #ffc89d,
-    24px 15px 0 0 #5a7fb5,
-    25px 15px 0 0 #4a6fa5,
-    18px 16px 0 0 #4a6fa5,
-    19px 16px 0 0 #5a7fb5,
-    20px 16px 0 0 #6a8fc5,
-    21px 16px 0 0 #6a8fc5,
-    22px 16px 0 0 #6a8fc5,
-    23px 16px 0 0 #6a8fc5,
-    24px 16px 0 0 #5a7fb5,
-    25px 16px 0 0 #4a6fa5,
-    19px 17px 0 0 #5a7fb5,
-    20px 17px 0 0 #6a8fc5,
-    21px 17px 0 0 #6a8fc5,
-    22px 17px 0 0 #6a8fc5,
-    23px 17px 0 0 #6a8fc5,
-    24px 17px 0 0 #5a7fb5,
-    17px 18px 0 0 #4a6fa5,
-    18px 18px 0 0 #5a7fb5,
-    19px 18px 0 0 #5a7fb5,
-    20px 18px 0 0 #6a8fc5,
-    21px 18px 0 0 #6a8fc5,
-    22px 18px 0 0 #6a8fc5,
-    23px 18px 0 0 #6a8fc5,
-    24px 18px 0 0 #5a7fb5,
-    25px 18px 0 0 #5a7fb5,
-    26px 18px 0 0 #4a6fa5,
-    16px 19px 0 0 #8a8a8a,
-    17px 19px 0 0 #ffc89d,
-    18px 19px 0 0 #ffc89d,
-    19px 19px 0 0 #5a7fb5,
-    20px 19px 0 0 #4a6fa5,
-    21px 19px 0 0 #4a6fa5,
-    22px 19px 0 0 #4a6fa5,
-    23px 19px 0 0 #4a6fa5,
-    24px 19px 0 0 #5a7fb5,
-    25px 19px 0 0 #ffc89d,
-    26px 19px 0 0 #ffc89d,
-    19px 20px 0 0 #4a6fa5,
-    20px 20px 0 0 #5a7fb5,
-    21px 20px 0 0 #5a7fb5,
-    22px 20px 0 0 #5a7fb5,
-    23px 20px 0 0 #5a7fb5,
-    24px 20px 0 0 #4a6fa5,
-    19px 21px 0 0 #4a6fa5,
-    20px 21px 0 0 #5a7fb5,
-    21px 21px 0 0 #5a7fb5,
-    22px 21px 0 0 #5a7fb5,
-    23px 21px 0 0 #5a7fb5,
-    24px 21px 0 0 #4a6fa5,
-    19px 22px 0 0 #4a6fa5,
-    20px 22px 0 0 #5a7fb5,
-    22px 22px 0 0 #5a7fb5,
-    23px 22px 0 0 #4a6fa5,
-    19px 23px 0 0 #4a6fa5,
-    20px 23px 0 0 #5a7fb5,
-    22px 23px 0 0 #5a7fb5,
-    23px 23px 0 0 #4a6fa5,
-    19px 24px 0 0 #3a3a3a,
-    20px 24px 0 0 #3a3a3a,
-    22px 24px 0 0 #3a3a3a,
-    23px 24px 0 0 #3a3a3a;
+    4px 0px 0 0 #5a5a5a, 5px 0px 0 0 #5a5a5a, 6px 0px 0 0 #5a5a5a,
+    3px 1px 0 0 #5a5a5a, 4px 1px 0 0 #8a8a8a, 5px 1px 0 0 #8a8a8a, 6px 1px 0 0 #8a8a8a, 7px 1px 0 0 #5a5a5a,
+    4px 2px 0 0 #2a2a2a, 5px 2px 0 0 #2a2a2a, 6px 2px 0 0 #2a2a2a,
+    3px 3px 0 0 #8a8a8a, 4px 3px 0 0 #ffc89d, 5px 3px 0 0 #ffc89d, 6px 3px 0 0 #ffc89d, 7px 3px 0 0 #8a8a8a,
+    2px 4px 0 0 #4a6fa5, 3px 4px 0 0 #5a7fb5, 4px 4px 0 0 #ffc89d, 5px 4px 0 0 #ffc89d, 6px 4px 0 0 #ffc89d, 7px 4px 0 0 #5a7fb5, 8px 4px 0 0 #4a6fa5,
+    2px 5px 0 0 #4a6fa5, 3px 5px 0 0 #5a7fb5, 4px 5px 0 0 #6a8fc5, 5px 5px 0 0 #6a8fc5, 6px 5px 0 0 #6a8fc5, 7px 5px 0 0 #5a7fb5, 8px 5px 0 0 #4a6fa5,
+    3px 6px 0 0 #5a7fb5, 4px 6px 0 0 #6a8fc5, 5px 6px 0 0 #6a8fc5, 6px 6px 0 0 #6a8fc5, 7px 6px 0 0 #5a7fb5,
+    1px 7px 0 0 #4a6fa5, 2px 7px 0 0 #5a7fb5, 3px 7px 0 0 #5a7fb5, 4px 7px 0 0 #6a8fc5, 5px 7px 0 0 #6a8fc5, 6px 7px 0 0 #6a8fc5, 7px 7px 0 0 #5a7fb5, 8px 7px 0 0 #5a7fb5, 9px 7px 0 0 #4a6fa5,
+    0px 8px 0 0 #ffc89d, 1px 8px 0 0 #ffc89d, 3px 8px 0 0 #5a7fb5, 4px 8px 0 0 #4a6fa5, 5px 8px 0 0 #4a6fa5, 6px 8px 0 0 #4a6fa5, 7px 8px 0 0 #5a7fb5, 8px 8px 0 0 #ffc89d, 9px 8px 0 0 #ffc89d,
+    3px 9px 0 0 #4a6fa5, 4px 9px 0 0 #5a7fb5, 5px 9px 0 0 #5a7fb5, 6px 9px 0 0 #5a7fb5, 7px 9px 0 0 #4a6fa5,
+    /* Pieds au sol */
+    3px 10px 0 0 #4a6fa5, 4px 10px 0 0 #5a7fb5, 5px 10px 0 0 #5a7fb5, 6px 10px 0 0 #5a7fb5, 7px 10px 0 0 #4a6fa5,
+    3px 11px 0 0 #4a6fa5, 4px 11px 0 0 #5a7fb5, 6px 11px 0 0 #5a7fb5, 7px 11px 0 0 #4a6fa5,
+    3px 12px 0 0 #4a6fa5, 4px 12px 0 0 #5a7fb5, 6px 12px 0 0 #5a7fb5, 7px 12px 0 0 #4a6fa5,
+    3px 13px 0 0 #3a3a3a, 4px 13px 0 0 #3a3a3a, 6px 13px 0 0 #3a3a3a, 7px 13px 0 0 #3a3a3a;
 }
 
-/* ===== ANIMATIONS ===== */
+/* ===== FRAME 2 (pied droit en avant) ===== */
 
-/* Animation Victory */
-.character-sprite.victory .sprite-container {
-  animation: victory-jump 0.6s ease-out;
+.character-sprite.chevalier .sprite-frame.frame-2 .sprite-pixels {
+  box-shadow:
+    4px 0px 0 0 #5a5a5a, 5px 0px 0 0 #5a5a5a, 6px 0px 0 0 #5a5a5a,
+    3px 1px 0 0 #5a5a5a, 4px 1px 0 0 #8a8a8a, 5px 1px 0 0 #8a8a8a, 6px 1px 0 0 #8a8a8a, 7px 1px 0 0 #5a5a5a,
+    4px 2px 0 0 #2a2a2a, 5px 2px 0 0 #2a2a2a, 6px 2px 0 0 #2a2a2a,
+    3px 3px 0 0 #8a8a8a, 4px 3px 0 0 #ffc89d, 5px 3px 0 0 #ffc89d, 6px 3px 0 0 #ffc89d, 7px 3px 0 0 #8a8a8a,
+    2px 4px 0 0 #4a6fa5, 3px 4px 0 0 #5a7fb5, 4px 4px 0 0 #ffc89d, 5px 4px 0 0 #ffc89d, 6px 4px 0 0 #ffc89d, 7px 4px 0 0 #5a7fb5, 8px 4px 0 0 #4a6fa5,
+    2px 5px 0 0 #4a6fa5, 3px 5px 0 0 #5a7fb5, 4px 5px 0 0 #6a8fc5, 5px 5px 0 0 #6a8fc5, 6px 5px 0 0 #6a8fc5, 7px 5px 0 0 #5a7fb5, 8px 5px 0 0 #4a6fa5,
+    3px 6px 0 0 #5a7fb5, 4px 6px 0 0 #6a8fc5, 5px 6px 0 0 #6a8fc5, 6px 6px 0 0 #6a8fc5, 7px 6px 0 0 #5a7fb5,
+    1px 7px 0 0 #4a6fa5, 2px 7px 0 0 #5a7fb5, 3px 7px 0 0 #5a7fb5, 4px 7px 0 0 #6a8fc5, 5px 7px 0 0 #6a8fc5, 6px 7px 0 0 #6a8fc5, 7px 7px 0 0 #5a7fb5, 8px 7px 0 0 #5a7fb5, 9px 7px 0 0 #4a6fa5,
+    0px 8px 0 0 #ffc89d, 1px 8px 0 0 #ffc89d, 3px 8px 0 0 #5a7fb5, 4px 8px 0 0 #4a6fa5, 5px 8px 0 0 #4a6fa5, 6px 8px 0 0 #4a6fa5, 7px 8px 0 0 #5a7fb5, 8px 8px 0 0 #ffc89d, 9px 8px 0 0 #ffc89d,
+    3px 9px 0 0 #4a6fa5, 4px 9px 0 0 #5a7fb5, 5px 9px 0 0 #5a7fb5, 6px 9px 0 0 #5a7fb5, 7px 9px 0 0 #4a6fa5,
+    /* Pied droit en avant (inversé) */
+    3px 10px 0 0 #4a6fa5, 4px 10px 0 0 #5a7fb5, 6px 10px 0 0 #5a7fb5, 7px 10px 0 0 #5a7fb5, 8px 10px 0 0 #4a6fa5,
+    2px 11px 0 0 #4a6fa5, 3px 11px 0 0 #5a7fb5, 7px 11px 0 0 #5a7fb5, 8px 11px 0 0 #4a6fa5,
+    1px 12px 0 0 #4a6fa5, 2px 12px 0 0 #5a7fb5, 8px 12px 0 0 #5a7fb5, 9px 12px 0 0 #4a6fa5,
+    1px 13px 0 0 #3a3a3a, 2px 13px 0 0 #3a3a3a, 8px 13px 0 0 #3a3a3a, 9px 13px 0 0 #3a3a3a;
 }
 
-@keyframes victory-jump {
-  0% { transform: translateY(0) scale(1); }
-  30% { transform: translateY(-10px) scale(1.1); }
-  60% { transform: translateY(-5px) scale(1.05); }
-  100% { transform: translateY(0) scale(1); }
-}
+/* ===== FRAME 3 (contact) ===== */
 
-/* Animation Level Up */
-.character-sprite.levelup .sprite-container {
-  animation: levelup-glow 1s ease-out;
-}
-
-@keyframes levelup-glow {
-  0%, 100% { 
-    filter: brightness(1) drop-shadow(0 0 0 transparent);
-  }
-  50% { 
-    filter: brightness(1.5) drop-shadow(0 0 10px gold);
-    transform: scale(1.2);
-  }
-}
-
-/* ===== AUTRES CLASSES (placeholder pour plus tard) ===== */
-
-.character-sprite.mage .sprite-pixel-art {
-  /* TODO: Sprite du mage */
-}
-
-.character-sprite.ranger .sprite-pixel-art {
-  /* TODO: Sprite du ranger */
-}
-
-.character-sprite.barde .sprite-pixel-art {
-  /* TODO: Sprite du barde */
+.character-sprite.chevalier .sprite-frame.frame-3 .sprite-pixels {
+  box-shadow:
+    4px 0px 0 0 #5a5a5a, 5px 0px 0 0 #5a5a5a, 6px 0px 0 0 #5a5a5a,
+    3px 1px 0 0 #5a5a5a, 4px 1px 0 0 #8a8a8a, 5px 1px 0 0 #8a8a8a, 6px 1px 0 0 #8a8a8a, 7px 1px 0 0 #5a5a5a,
+    4px 2px 0 0 #2a2a2a, 5px 2px 0 0 #2a2a2a, 6px 2px 0 0 #2a2a2a,
+    3px 3px 0 0 #8a8a8a, 4px 3px 0 0 #ffc89d, 5px 3px 0 0 #ffc89d, 6px 3px 0 0 #ffc89d, 7px 3px 0 0 #8a8a8a,
+    2px 4px 0 0 #4a6fa5, 3px 4px 0 0 #5a7fb5, 4px 4px 0 0 #ffc89d, 5px 4px 0 0 #ffc89d, 6px 4px 0 0 #ffc89d, 7px 4px 0 0 #5a7fb5, 8px 4px 0 0 #4a6fa5,
+    2px 5px 0 0 #4a6fa5, 3px 5px 0 0 #5a7fb5, 4px 5px 0 0 #6a8fc5, 5px 5px 0 0 #6a8fc5, 6px 5px 0 0 #6a8fc5, 7px 5px 0 0 #5a7fb5, 8px 5px 0 0 #4a6fa5,
+    3px 6px 0 0 #5a7fb5, 4px 6px 0 0 #6a8fc5, 5px 6px 0 0 #6a8fc5, 6px 6px 0 0 #6a8fc5, 7px 6px 0 0 #5a7fb5,
+    1px 7px 0 0 #4a6fa5, 2px 7px 0 0 #5a7fb5, 3px 7px 0 0 #5a7fb5, 4px 7px 0 0 #6a8fc5, 5px 7px 0 0 #6a8fc5, 6px 7px 0 0 #6a8fc5, 7px 7px 0 0 #5a7fb5, 8px 7px 0 0 #5a7fb5, 9px 7px 0 0 #4a6fa5,
+    0px 8px 0 0 #ffc89d, 1px 8px 0 0 #ffc89d, 3px 8px 0 0 #5a7fb5, 4px 8px 0 0 #4a6fa5, 5px 8px 0 0 #4a6fa5, 6px 8px 0 0 #4a6fa5, 7px 8px 0 0 #5a7fb5, 8px 8px 0 0 #ffc89d, 9px 8px 0 0 #ffc89d,
+    3px 9px 0 0 #4a6fa5, 4px 9px 0 0 #5a7fb5, 5px 9px 0 0 #5a7fb5, 6px 9px 0 0 #5a7fb5, 7px 9px 0 0 #4a6fa5,
+    3px 10px 0 0 #4a6fa5, 4px 10px 0 0 #5a7fb5, 5px 10px 0 0 #5a7fb5, 6px 10px 0 0 #5a7fb5, 7px 10px 0 0 #4a6fa5,
+    3px 11px 0 0 #4a6fa5, 4px 11px 0 0 #5a7fb5, 6px 11px 0 0 #5a7fb5, 7px 11px 0 0 #4a6fa5,
+    3px 12px 0 0 #4a6fa5, 4px 12px 0 0 #5a7fb5, 6px 12px 0 0 #5a7fb5, 7px 12px 0 0 #4a6fa5,
+    3px 13px 0 0 #3a3a3a, 4px 13px 0 0 #3a3a3a, 6px 13px 0 0 #3a3a3a, 7px 13px 0 0 #3a3a3a;
 }

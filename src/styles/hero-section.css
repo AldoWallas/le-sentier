@@ -1,18 +1,46 @@
-/* ===== HERO SECTION - IMMERSIF FULL SCREEN ===== */
+/* ===== SYSTÈME HORIZON-BASED + BANDEAU UI ===== */
 
-.hero-section {
-  position: relative;
-  height: 70vh;
-  min-height: 600px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+:root {
+  --horizon-height: 33.33vh;
+  --sky-height: 66.67vh;
+  --ground-height: 33.33vh;
 }
 
-/* ===== BACKGROUND ===== */
+/* ===== FADE IN ===== */
 
-.hero-background {
+.hero-landscape {
+  opacity: 0;
+  transition: opacity 2s ease-in;
+}
+
+.hero-landscape.fade-in-active {
+  opacity: 1;
+}
+
+/* ===== SECTION PAYSAGE ===== */
+
+.hero-landscape {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 500px;
+  overflow: hidden;
+}
+
+.horizon-line {
+  position: absolute;
+  bottom: var(--horizon-height);
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: transparent;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== COUCHE 1 : CIEL ===== */
+
+.layer-sky {
   position: absolute;
   top: 0;
   left: 0;
@@ -21,51 +49,43 @@
   z-index: 1;
 }
 
-/* Transitions de couleur selon moment de journée */
-.hero-section.dawn .hero-background {
+.hero-landscape.dawn .layer-sky {
   background: linear-gradient(to bottom, 
-    #ff9a76 0%,
-    #ffd89b 40%,
-    #a8d8ea 100%
+    #ff9a76 0%, #ffd89b 30%, #a8d8ea 100%
   );
 }
 
-.hero-section.day .hero-background {
+.hero-landscape.day .layer-sky {
   background: linear-gradient(to bottom, 
-    #4a9fd8 0%,
-    #87ceeb 50%,
-    #b4e7f5 100%
+    #4a9fd8 0%, #87ceeb 40%, #b4e7f5 100%
   );
 }
 
-.hero-section.dusk .hero-background {
+.hero-landscape.dusk .layer-sky {
   background: linear-gradient(to bottom, 
-    #3d3056 0%,
-    #9b6a9d 40%,
-    #d4a5a5 100%
+    #3d3056 0%, #9b6a9d 30%, #d4a5a5 100%
   );
 }
 
-.hero-section.night .hero-background {
+.hero-landscape.night .layer-sky {
   background: linear-gradient(to bottom, 
-    #1a1c2c 0%,
-    #262b44 60%,
-    #3d405b 100%
+    #1a1c2c 0%, #262b44 50%, #3d405b 100%
   );
 }
 
-/* ===== ÉTOILES ===== */
+/* ===== COUCHE 2 : ÉTOILES ===== */
 
-.hero-stars {
+.layer-stars {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 60%;
+  height: var(--sky-height);
   z-index: 2;
+  pointer-events: none;
 }
 
-.hero-star {
+.star {
   position: absolute;
   width: 2px;
   height: 2px;
@@ -79,305 +99,329 @@
   50% { opacity: 1; }
 }
 
-/* ===== SOLEIL / LUNE ===== */
+/* ===== COUCHE 3 : SOLEIL/LUNE ===== */
 
-.hero-celestial {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  top: 15%;
-  right: 15%;
-  z-index: 3;
-  transition: opacity 1s ease;
-}
-
-.hero-celestial.sun {
-  background: radial-gradient(circle, #ffe066, #ffb84d);
-  box-shadow: 0 0 40px rgba(255, 224, 102, 0.8);
-}
-
-.hero-celestial.moon {
-  background: radial-gradient(circle, #f0f0f0, #d4d4d4);
-  box-shadow: 0 0 30px rgba(240, 240, 240, 0.6);
-}
-
-.hero-section.dawn .sun { opacity: 0.8; }
-.hero-section.day .sun { opacity: 1; }
-.hero-section.dusk .sun { opacity: 0.5; }
-.hero-section.night .sun { opacity: 0; }
-
-.hero-section.dawn .moon { opacity: 0.2; }
-.hero-section.day .moon { opacity: 0; }
-.hero-section.dusk .moon { opacity: 0.5; }
-.hero-section.night .moon { opacity: 1; }
-
-/* ===== NUAGES ===== */
-
-.hero-clouds {
+.layer-celestial {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 50%;
-  z-index: 4;
-  overflow: hidden;
+  height: var(--sky-height);
+  z-index: 3;
+  pointer-events: none;
 }
 
-.hero-cloud {
+.celestial {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  top: 8%;
+  right: 12%;
+  transition: opacity 1s ease;
+}
+
+.celestial.sun {
+  background: radial-gradient(circle, #ffe066, #ffb84d);
+  box-shadow: 0 0 40px rgba(255, 224, 102, 0.8);
+}
+
+.celestial.moon {
+  background: radial-gradient(circle, #f0f0f0, #d4d4d4);
+  box-shadow: 0 0 30px rgba(240, 240, 240, 0.6);
+}
+
+.hero-landscape.dawn .sun { opacity: 0.8; }
+.hero-landscape.day .sun { opacity: 1; }
+.hero-landscape.dusk .sun { opacity: 0.5; }
+.hero-landscape.night .sun { opacity: 0; }
+
+.hero-landscape.dawn .moon { opacity: 0.2; }
+.hero-landscape.day .moon { opacity: 0; }
+.hero-landscape.dusk .moon { opacity: 0.5; }
+.hero-landscape.night .moon { opacity: 1; }
+
+/* ===== COUCHE 4 : NUAGES ===== */
+
+.layer-clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--sky-height);
+  z-index: 4;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cloud {
   position: absolute;
   width: 120px;
   height: 40px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 50px;
-  animation: cloud-float 60s linear infinite;
+  animation: cloud-scroll 50s linear infinite;
 }
 
-.hero-cloud::before,
-.hero-cloud::after {
+.cloud::before,
+.cloud::after {
   content: '';
   position: absolute;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
 }
 
-.hero-cloud::before {
+.cloud::before {
   width: 50px;
   height: 50px;
   top: -25px;
   left: 20px;
 }
 
-.hero-cloud::after {
+.cloud::after {
   width: 60px;
   height: 60px;
   top: -30px;
   right: 20px;
 }
 
-@keyframes cloud-float {
-  from { transform: translateX(-200px); }
-  to { transform: translateX(calc(100vw + 200px)); }
+@keyframes cloud-scroll {
+  from { transform: translateX(100vw); }
+  to { transform: translateX(-200px); }
 }
 
-/* Nuages plus transparents la nuit */
-.hero-section.night .hero-cloud,
-.hero-section.night .hero-cloud::before,
-.hero-section.night .hero-cloud::after {
-  background: rgba(255, 255, 255, 0.1);
+.hero-landscape.night .cloud,
+.hero-landscape.night .cloud::before,
+.hero-landscape.night .cloud::after {
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* ===== MONTAGNES ===== */
+/* ===== COUCHE 5-6 : MONTAGNES ===== */
 
-.hero-mountains {
+.layer-mountains-far {
   position: absolute;
-  bottom: 80px;
+  bottom: calc(var(--horizon-height) - 80px);
   left: 0;
-  width: 100%;
+  width: 200%;
   height: 200px;
   z-index: 5;
   display: flex;
   align-items: flex-end;
-  justify-content: space-around;
+  gap: 100px;
+  animation: mountains-scroll-slow 180s linear infinite;
 }
 
-.hero-mountain {
+.layer-mountains-near {
+  position: absolute;
+  bottom: calc(var(--horizon-height) - 40px);
+  left: 0;
+  width: 200%;
+  height: 240px;
+  z-index: 6;
+  display: flex;
+  align-items: flex-end;
+  gap: 150px;
+  animation: mountains-scroll-medium 120s linear infinite;
+}
+
+@keyframes mountains-scroll-slow {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes mountains-scroll-medium {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.mountain {
   width: 0;
   height: 0;
   border-style: solid;
+  flex-shrink: 0;
 }
 
-.hero-mountain.far {
-  border-width: 0 100px 120px 100px;
-  border-color: transparent transparent rgba(60, 60, 80, 0.4) transparent;
+.mountain.far-1 {
+  border-width: 0 110px 140px 110px;
+  border-color: transparent transparent rgba(60, 60, 80, 0.35) transparent;
 }
 
-.hero-mountain.mid {
-  border-width: 0 120px 160px 120px;
-  border-color: transparent transparent rgba(50, 50, 70, 0.6) transparent;
+.mountain.far-2 {
+  border-width: 0 130px 170px 130px;
+  border-color: transparent transparent rgba(50, 50, 70, 0.45) transparent;
 }
 
-.hero-mountain.near {
-  border-width: 0 140px 200px 140px;
-  border-color: transparent transparent rgba(40, 40, 60, 0.8) transparent;
+.mountain.far-3 {
+  border-width: 0 100px 130px 100px;
+  border-color: transparent transparent rgba(55, 55, 75, 0.4) transparent;
 }
 
-/* ===== SOL ET CHEMIN ===== */
+.mountain.near-1 {
+  border-width: 0 140px 190px 140px;
+  border-color: transparent transparent rgba(40, 40, 60, 0.65) transparent;
+}
 
-.hero-ground {
+.mountain.near-2 {
+  border-width: 0 160px 220px 160px;
+  border-color: transparent transparent rgba(35, 35, 55, 0.75) transparent;
+}
+
+/* ===== COUCHE 7 : ARBRES ===== */
+
+.layer-trees {
+  position: absolute;
+  bottom: var(--horizon-height);
+  left: 0;
+  width: 200%;
+  height: 150px;
+  z-index: 7;
+  animation: trees-scroll-fast 60s linear infinite;
+}
+
+@keyframes trees-scroll-fast {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.tree {
+  position: absolute;
+  bottom: 0;
+  width: 35px;
+  background: linear-gradient(to bottom, #2a4a2a, #1a3a1a);
+  border-radius: 3px 3px 0 0;
+}
+
+.tree::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 30px 45px 30px;
+  border-color: transparent transparent #3a5a3a transparent;
+}
+
+.tree::after {
+  content: '';
+  position: absolute;
+  top: -65px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 25px 40px 25px;
+  border-color: transparent transparent #4a6a4a transparent;
+}
+
+/* ===== COUCHE 8 : SOL ===== */
+
+.layer-ground {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 80px;
-  background: linear-gradient(to bottom, #5a7a5a, #3a5a3a);
-  z-index: 6;
+  height: var(--ground-height);
+  background: linear-gradient(to bottom, #4a6a4a, #3a5a3a);
+  z-index: 8;
 }
 
-.hero-path {
+.grass {
   position: absolute;
-  bottom: 20px;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 30px;
+  height: 12px;
   background: repeating-linear-gradient(
     90deg,
-    #8a7a6a 0px, #8a7a6a 10px,
-    #7a6a5a 10px, #7a6a5a 20px
+    #5a7a5a 0px, #5a7a5a 4px,
+    #4a6a4a 4px, #4a6a4a 8px
   );
-  border-top: 2px solid #6a5a4a;
-  border-bottom: 2px solid #5a4a3a;
 }
 
-/* ===== OVERLAY STATS (discret) ===== */
+/* ===== COUCHE 9 : PERSONNAGE (SPRITE COMPACT) ===== */
 
-.hero-overlay {
+.layer-character {
+  position: absolute;
+  bottom: var(--horizon-height);
+  left: 50%;
+  transform: translateX(-50%) scale(4); /* Agrandi x4 */
+  transform-origin: bottom center;
+  z-index: 9;
+}
+
+/* ===== COUCHE 10 : UI OVERLAY ===== */
+
+.layer-ui-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.layer-ui-top > * {
+  pointer-events: auto;
+}
+
+.ui-top-left {
   position: absolute;
   top: 20px;
   left: 20px;
-  z-index: 10;
   font-family: 'Press Start 2P', cursive;
 }
 
-.hero-greeting {
+.greeting {
   font-size: 10px;
   color: var(--secondary);
   text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
   margin-bottom: 8px;
 }
 
-.hero-day {
+.day-counter {
   font-size: 14px;
   color: var(--primary);
   text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.8);
 }
 
-/* ===== PERSONNAGE AU CENTRE ===== */
-
-.hero-character-container {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 40px; /* Pour la barre XP */
-}
-
-.hero-character-info {
-  text-align: center;
-  font-family: 'Press Start 2P', cursive;
-}
-
-.hero-character-name {
+.ui-sign-out {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
   font-size: 16px;
-  color: var(--primary);
-  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.8);
-  margin-bottom: 4px;
-}
-
-.hero-character-class {
-  font-size: 12px;
-  color: var(--text);
+  cursor: pointer;
+  padding: 4px 8px;
   text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
 }
 
-.hero-level {
-  display: inline-block;
-  background: var(--primary);
-  color: var(--bg-dark);
-  font-size: 10px;
-  padding: 2px 6px;
-  margin-left: 8px;
+.ui-sign-out:hover {
+  color: var(--danger);
 }
 
-/* Barre XP sous le personnage */
-.hero-xp-bar {
-  width: 280px;
-  height: 20px;
-  background: rgba(26, 28, 44, 0.8);
-  border: 4px solid var(--pixel-border);
-  position: relative;
-}
-
-.hero-xp-fill {
-  height: 100%;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--secondary) 0px, var(--secondary) 8px,
-    #3aa8d8 8px, #3aa8d8 16px
-  );
-  transition: width 0.3s ease;
-}
-
-.hero-xp-text {
+.ui-scroll-hint {
   position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 8px;
-  color: var(--text);
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
-}
-
-/* ===== STATS EN BAS À DROITE ===== */
-
-.hero-stats {
-  position: absolute;
-  bottom: 100px;
-  right: 20px;
-  z-index: 10;
-  display: flex;
-  gap: 16px;
-}
-
-.hero-stat {
-  background: rgba(26, 28, 44, 0.9);
-  border: 3px solid var(--pixel-border);
-  padding: 8px 12px;
-  text-align: center;
-  min-width: 70px;
-  font-family: 'Press Start 2P', cursive;
-}
-
-.hero-stat-icon {
-  font-size: 14px;
-  margin-right: 4px;
-}
-
-.hero-stat-value {
-  font-size: 12px;
-  color: var(--primary);
-  display: block;
-}
-
-.hero-stat-label {
-  font-size: 8px;
-  color: var(--text-dim);
-  display: block;
-  margin-top: 4px;
-}
-
-/* ===== INDICATEUR DE SCROLL ===== */
-
-.hero-scroll-hint {
-  position: absolute;
-  bottom: 20px;
+  bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
   text-align: center;
   animation: bounce-hint 2s ease-in-out infinite;
 }
 
-.hero-scroll-arrow {
+.scroll-arrow {
   font-size: 24px;
   color: var(--primary);
   text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
 }
 
-.hero-scroll-text {
+.scroll-text {
   font-family: 'Press Start 2P', cursive;
   font-size: 8px;
   color: var(--text-dim);
@@ -390,61 +434,136 @@
   50% { transform: translateX(-50%) translateY(-10px); }
 }
 
+.ui-version {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.3);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* ===== BANDEAU INFO EN BAS ===== */
+
+.hero-info-bar {
+  background: rgba(26, 28, 44, 0.95);
+  border-top: 4px solid var(--pixel-border);
+  padding: 16px 20px;
+}
+
+.info-bar-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.character-info-compact {
+  font-family: 'Press Start 2P', cursive;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.character-name-compact {
+  font-size: 16px;
+  color: var(--primary);
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+}
+
+.character-class-compact {
+  font-size: 12px;
+  color: var(--text);
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+}
+
+.character-level-compact {
+  display: inline-block;
+  background: var(--primary);
+  color: var(--bg-dark);
+  font-size: 10px;
+  padding: 3px 7px;
+}
+
+.xp-bar-compact {
+  flex: 1;
+  min-width: 200px;
+  max-width: 400px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 3px solid var(--pixel-border);
+  position: relative;
+}
+
+.xp-fill-compact {
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--secondary) 0px, var(--secondary) 6px,
+    #3aa8d8 6px, #3aa8d8 12px
+  );
+  transition: width 0.3s ease;
+}
+
+.xp-text-compact {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  color: var(--text);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+}
+
 /* ===== RESPONSIVE ===== */
 
 @media (max-width: 768px) {
-  .hero-section {
+  .hero-landscape {
     height: 60vh;
-    min-height: 500px;
+    min-height: 450px;
   }
 
-  .hero-character-name {
+  .layer-character {
+    transform: translateX(-50%) scale(3);
+  }
+
+  .character-name-compact {
     font-size: 14px;
-  }
-
-  .hero-xp-bar {
-    width: 220px;
-  }
-
-  .hero-stats {
-    flex-direction: column;
-    gap: 8px;
-    bottom: 120px;
-  }
-
-  .hero-stat {
-    min-width: 60px;
-    padding: 6px 8px;
   }
 }
 
 @media (max-width: 500px) {
-  .hero-overlay {
-    top: 12px;
-    left: 12px;
+  .hero-landscape {
+    height: 55vh;
+    min-height: 400px;
   }
 
-  .hero-greeting {
+  .layer-character {
+    transform: translateX(-50%) scale(2.5);
+  }
+
+  .greeting {
     font-size: 8px;
   }
 
-  .hero-day {
+  .day-counter {
     font-size: 12px;
   }
 
-  .hero-mountains {
-    bottom: 60px;
+  .hero-info-bar {
+    padding: 12px 16px;
   }
 
-  .hero-mountain.far {
-    border-width: 0 60px 80px 60px;
+  .character-name-compact {
+    font-size: 12px;
   }
 
-  .hero-mountain.mid {
-    border-width: 0 80px 100px 80px;
-  }
-
-  .hero-mountain.near {
-    border-width: 0 100px 140px 100px;
+  .xp-bar-compact {
+    min-width: 100%;
   }
 }

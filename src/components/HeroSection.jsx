@@ -5,12 +5,12 @@ import '../styles/hero-section.css'
 export default function HeroSection({ character, stats, dayCount, onSignOut }) {
   const [timeOfDay, setTimeOfDay] = useState('day')
   const [greeting, setGreeting] = useState('')
+  const [fadeIn, setFadeIn] = useState(false)
 
   useEffect(() => {
     const updateTime = () => {
       const hour = new Date().getHours()
       
-      // Déterminer le moment de la journée
       if (hour >= 5 && hour < 12) {
         setTimeOfDay('dawn')
         setGreeting('BONJOUR')
@@ -28,6 +28,9 @@ export default function HeroSection({ character, stats, dayCount, onSignOut }) {
 
     updateTime()
     const interval = setInterval(updateTime, 60000)
+    
+    setTimeout(() => setFadeIn(true), 300)
+    
     return () => clearInterval(interval)
   }, [])
 
@@ -45,16 +48,18 @@ export default function HeroSection({ character, stats, dayCount, onSignOut }) {
   const nextLevelXp = [0, 100, 250, 500, 850, 1300, 1850, 2500, 3300, 4200, 5200][character?.level] || 5200
 
   return (
-    <section className={`hero-section ${timeOfDay}`}>
-      {/* Background avec étoiles, nuages, montagnes */}
-      <div className="hero-background">
-        {/* Étoiles (nuit uniquement) */}
+    <>
+      {/* SECTION PAYSAGE */}
+      <section className={`hero-landscape ${timeOfDay} ${fadeIn ? 'fade-in-active' : ''}`}>
+        <div className="horizon-line" />
+        <div className="layer-sky" />
+
         {(timeOfDay === 'night' || timeOfDay === 'dusk') && (
-          <div className="hero-stars">
-            {[...Array(50)].map((_, i) => (
+          <div className="layer-stars">
+            {[...Array(60)].map((_, i) => (
               <div
                 key={i}
-                className="hero-star"
+                className="star"
                 style={{
                   top: `${Math.random() * 60}%`,
                   left: `${Math.random() * 100}%`,
@@ -65,103 +70,107 @@ export default function HeroSection({ character, stats, dayCount, onSignOut }) {
           </div>
         )}
 
-        {/* Soleil/Lune */}
-        <div className="hero-celestial sun" />
-        <div className="hero-celestial moon" />
+        <div className="layer-celestial">
+          <div className="celestial sun" />
+          <div className="celestial moon" />
+        </div>
 
-        {/* Nuages */}
-        <div className="hero-clouds">
-          {[...Array(3)].map((_, i) => (
+        <div className="layer-clouds">
+          {[...Array(5)].map((_, i) => (
             <div
               key={i}
-              className="hero-cloud"
+              className="cloud"
               style={{
-                top: `${10 + i * 15}%`,
-                animationDelay: `${i * -20}s`,
-                animationDuration: `${60 + i * 10}s`
+                top: `${5 + i * 8}%`,
+                animationDelay: `${i * -25}s`,
+                animationDuration: `${50 + i * 8}s`
               }}
             />
           ))}
         </div>
 
-        {/* Montagnes en arrière-plan */}
-        <div className="hero-mountains">
-          <div className="hero-mountain far" />
-          <div className="hero-mountain mid" />
-          <div className="hero-mountain near" />
+        <div className="layer-mountains-far">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className={`mountain far-${(i % 3) + 1}`} />
+          ))}
         </div>
 
-        {/* Sol avec chemin */}
-        <div className="hero-ground">
-          <div className="hero-path" />
+        <div className="layer-mountains-near">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className={`mountain near-${(i % 2) + 1}`} />
+          ))}
         </div>
-      </div>
 
-      {/* Stats overlay discret */}
-     <div className="hero-overlay">
-  <div className="hero-greeting">
-    {greeting}, VOYAGEUR
-  </div>
-  <div className="hero-day">
-    JOUR {dayCount}
-  </div>
-  
-  <button
-    className="sign-out-btn"
-    onClick={onSignOut}
-    title="Déconnexion"
-  >
-    ✕
-  </button>
-</div>
+        <div className="layer-trees">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="tree"
+              style={{
+                left: `${i * 150}px`,
+                height: `${70 + (i % 4) * 20}px`
+              }}
+            />
+          ))}
+        </div>
 
-      {/* Personnage au centre */}
-      <div className="hero-character-container">
-        <CharacterSprite 
-          characterClass={character?.class} 
-          animation="idle" 
-        />
-        
-        <div className="hero-character-info">
-          <div className="hero-character-name">
-            {character?.name?.toUpperCase()}
+        <div className="layer-ground">
+          <div className="grass" />
+        </div>
+
+        <div className="layer-character">
+          <CharacterSprite 
+            characterClass={character?.class} 
+            animation="walk" 
+          />
+        </div>
+
+        <div className="layer-ui-top">
+          <div className="ui-top-left">
+            <div className="greeting">{greeting}, VOYAGEUR</div>
+            <div className="day-counter">JOUR {dayCount}</div>
           </div>
-          <div className="hero-character-class">
-            {character?.class?.charAt(0).toUpperCase() + character?.class?.slice(1)} 
-            <span className="hero-level">LVL {character?.level}</span>
+          
+          <button 
+            className="ui-sign-out" 
+            onClick={onSignOut}
+            title="Déconnexion"
+          >
+            ✕
+          </button>
+
+          <div className="ui-scroll-hint">
+            <div className="scroll-arrow">▼</div>
+            <div className="scroll-text">Scroll pour voir tes quêtes</div>
+          </div>
+
+          <div className="ui-version">v0.1.005</div>
+        </div>
+      </section>
+
+      {/* BANDEAU UI EN BAS */}
+      <section className="hero-info-bar">
+        <div className="info-bar-content">
+          <div className="character-info-compact">
+            <span className="character-name-compact">
+              {character?.name?.toUpperCase()}
+            </span>
+            <span className="character-class-compact">
+              {character?.class?.charAt(0).toUpperCase() + character?.class?.slice(1)}
+            </span>
+            <span className="character-level-compact">
+              LVL {character?.level}
+            </span>
+          </div>
+
+          <div className="xp-bar-compact">
+            <div className="xp-fill-compact" style={{ width: `${xpProgress}%` }} />
+            <span className="xp-text-compact">
+              {character?.xp - currentLevelXp}/{nextLevelXp - currentLevelXp} XP
+            </span>
           </div>
         </div>
-
-        {/* Barre XP sous le personnage */}
-        <div className="hero-xp-bar">
-          <div className="hero-xp-fill" style={{ width: `${xpProgress}%` }} />
-          <span className="hero-xp-text">
-            {character?.xp - currentLevelXp}/{nextLevelXp - currentLevelXp} XP
-          </span>
-        </div>
-      </div>
-
-      {/* Stats discrètes en bas à droite */}
-      <div className="hero-stats">
-        <div className="hero-stat">
-          <span className="hero-stat-icon">🔥</span>
-          <span className="hero-stat-value">{stats?.streak || 0}</span>
-        </div>
-        <div className="hero-stat">
-          <span className="hero-stat-value">{stats?.efficiency || 0}%</span>
-          <span className="hero-stat-label">Efficacité</span>
-        </div>
-        <div className="hero-stat">
-          <span className="hero-stat-icon">📖</span>
-          <span className="hero-stat-value">{stats?.questsProgress || '0/0'}</span>
-        </div>
-      </div>
-
-      {/* Indicateur de scroll */}
-      <div className="hero-scroll-hint">
-        <div className="hero-scroll-arrow">▼</div>
-        <div className="hero-scroll-text">Scroll pour voir tes quêtes</div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
