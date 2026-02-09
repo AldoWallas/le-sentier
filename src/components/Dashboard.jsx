@@ -93,8 +93,16 @@ export default function Dashboard() {
   }
 
   const completeTask = async (taskId) => {
+    console.log('🔥 completeTask APPELÉE !')
+    console.log('TaskId:', taskId)
+    
     const task = tasks.find(t => t.id === taskId)
-    if (!task) return
+    console.log('Task trouvée:', task)
+    
+    if (!task) {
+      console.log('❌ Pas de task trouvée, return')
+      return
+    }
 
     const newStatus = task.status === 'completed' ? 'pending' : 'completed'
     const completedAt = newStatus === 'completed' ? new Date().toISOString() : null

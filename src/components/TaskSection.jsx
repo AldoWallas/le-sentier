@@ -44,10 +44,16 @@ export default function TaskSection({ tasks, onComplete, onDelete, onEdit, onAdd
 
   // Gérer la complétion avec auto-disparition
   const handleComplete = (taskId) => {
+    console.log('🔵 CHECKBOX CLIQUÉE !')
+    console.log('TaskId:', taskId)
+    console.log('onComplete function:', onComplete)
+    
     const task = tasks.find(t => t.id === taskId)
+    console.log('Task:', task)
     
     // Si la tâche n'est PAS encore complétée, on la complète
     if (task && task.status !== 'completed') {
+      console.log('→ Appel de onComplete()')
       onComplete(taskId)
       
       // Marquer comme "en train de disparaître"
