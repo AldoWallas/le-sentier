@@ -99,12 +99,23 @@ export default function Dashboard() {
     const newStatus = task.status === 'completed' ? 'pending' : 'completed'
     const completedAt = newStatus === 'completed' ? new Date().toISOString() : null
 
+    console.log('completeTask called:', {
+      taskId,
+      taskName: task.name,
+      oldStatus: task.status,
+      newStatus,
+      hasCharacter: !!character,
+      characterId: character?.id
+    })
+
     await supabase
       .from('tasks')
       .update({ status: newStatus, completed_at: completedAt })
       .eq('id', taskId)
 
     if (newStatus === 'completed' && character) {
+      console.log('→ Entering completed block')
+      
       // Ajouter XP
       const newXp = character.xp + task.xp
       const newLevel = calculateLevel(newXp)
