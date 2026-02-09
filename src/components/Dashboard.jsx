@@ -93,21 +93,21 @@ export default function Dashboard() {
   }
 
   const completeTask = async (taskId) => {
-    console.log('🔥 completeTask APPELÉE !')
+    console.log('=== completeTask CALLED ===')
     console.log('TaskId:', taskId)
     
     const task = tasks.find(t => t.id === taskId)
-    console.log('Task trouvée:', task)
+    console.log('Task found:', task)
     
     if (!task) {
-      console.log('❌ Pas de task trouvée, return')
+      console.log('ERROR: No task found, returning')
       return
     }
 
     const newStatus = task.status === 'completed' ? 'pending' : 'completed'
     const completedAt = newStatus === 'completed' ? new Date().toISOString() : null
 
-    console.log('completeTask called:', {
+    console.log('completeTask details:', {
       taskId,
       taskName: task.name,
       oldStatus: task.status,
@@ -122,7 +122,7 @@ export default function Dashboard() {
       .eq('id', taskId)
 
     if (newStatus === 'completed' && character) {
-      console.log('→ Entering completed block')
+      console.log('>>> Entering completed block')
       
       // Ajouter XP
       const newXp = character.xp + task.xp
@@ -139,7 +139,7 @@ export default function Dashboard() {
       const quest = quests.find(q => q.id === task.quest_id)
       const chapter = chapters.find(c => c.id === task.chapter_id)
       
-      console.log('Enregistrement historique:', {
+      console.log('Saving to task_history:', {
         character_id: character.id,
         task_name: task.name,
         task_xp: task.xp,
@@ -159,9 +159,9 @@ export default function Dashboard() {
         })
 
       if (error) {
-        console.error('Erreur enregistrement historique:', error)
+        console.error('ERROR saving task_history:', error)
       } else {
-        console.log('Historique enregistré avec succès:', data)
+        console.log('SUCCESS: task_history saved!', data)
       }
 
       // Déclencher l'animation coeur
