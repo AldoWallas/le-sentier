@@ -120,7 +120,15 @@ export default function Dashboard() {
       const quest = quests.find(q => q.id === task.quest_id)
       const chapter = chapters.find(c => c.id === task.chapter_id)
       
-      await supabase
+      console.log('Enregistrement historique:', {
+        character_id: character.id,
+        task_name: task.name,
+        task_xp: task.xp,
+        quest_name: quest?.name || null,
+        chapter_name: chapter?.name || null
+      })
+      
+      const { data, error } = await supabase
         .from('task_history')
         .insert({
           character_id: character.id,
@@ -130,6 +138,12 @@ export default function Dashboard() {
           chapter_name: chapter?.name || null,
           completed_at: completedAt
         })
+
+      if (error) {
+        console.error('Erreur enregistrement historique:', error)
+      } else {
+        console.log('Historique enregistré avec succès:', data)
+      }
 
       // Déclencher l'animation coeur
       setTriggerHeart(prev => prev + 1)
