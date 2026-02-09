@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import CharacterSprite from './CharacterSprite'
 import HeartParticle from './HeartParticle'
+import LogbookModal from './LogbookModal'
 import '../styles/hero-section.css'
 
 export default function HeroSection({ character, stats, dayCount, onSignOut, showHeart }) {
@@ -9,6 +10,8 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
   const [fadeIn, setFadeIn] = useState(false)
   const [hearts, setHearts] = useState([])
   const [trees, setTrees] = useState([])
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [logbookOpen, setLogbookOpen] = useState(false)
 
   // Définition des zones (biomes)
   const zones = useMemo(() => [
@@ -234,6 +237,18 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
     }
   }, [showHeart])
 
+  // Fermer le menu au clic extérieur
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuOpen && !e.target.closest('.ui-menu')) {
+        setMenuOpen(false)
+      }
+    }
+    
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [menuOpen])
+
   const removeHeart = (id) => {
     setHearts(prev => prev.filter(h => h.id !== id))
   }
@@ -347,21 +362,47 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
 
         <div className="layer-ui-top">
           <div className="ui-top-left">
-            <div className="greeting">{greeting}, VOYAGEUR</div>
-            <div className="day-counter">JOUR {dayCount}</div>
+            <div className="greeting">{greeting}, TRAVELER</div>
+            <div className="day-counter">DAY {dayCount}</div>
           </div>
           
-          <button 
-            className="ui-sign-out" 
-            onClick={onSignOut}
-            title="Déconnexion"
-          >
-            ✕
-          </button>
+          {/* Menu burger */}
+          <div className="ui-menu">
+            <button 
+              className="ui-menu-toggle" 
+              onClick={() => setMenuOpen(!menuOpen)}
+              title="Menu"
+            >
+              ☰
+            </button>
+            
+            {menuOpen && (
+              <div className="ui-menu-dropdown">
+                <button 
+                  className="menu-item"
+                  onClick={() => {
+                    setMenuOpen(false)
+                    setLogbookOpen(true)
+                  }}
+                >
+                  📖 Logbook
+                </button>
+                <button 
+                  className="menu-item"
+                  onClick={() => {
+                    setMenuOpen(false)
+                    onSignOut()
+                  }}
+                >
+                  🚪 Sign out
+                </button>
+              </div>
+            )}
+          </div>
 
           <div className="ui-scroll-hint">
             <div className="scroll-arrow">▼</div>
-            <div className="scroll-text">Scroll pour voir tes quêtes</div>
+            <div className="scroll-text">Scroll to see your quests</div>
           </div>
 
           <div className="ui-version">v0.1.006</div>
@@ -391,6 +432,13 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
           </div>
         </div>
       </section>
+
+      {/* Logbook Modal */}
+      <LogbookModal 
+        isOpen={logbookOpen}
+        onClose={() => setLogbookOpen(false)}
+        characterId={character?.id}
+      />
     </>
   )
 }

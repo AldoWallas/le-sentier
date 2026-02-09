@@ -1,0 +1,308 @@
+/* ===== LOGBOOK MODAL ===== */
+
+/* Overlay */
+.logbook-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fade-in 0.2s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal container */
+.logbook-modal {
+  width: 90%;
+  max-width: 700px;
+  max-height: 85vh;
+  animation: modal-appear 0.3s ease-out;
+}
+
+@keyframes modal-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Bordure pixel art (extérieur) */
+.logbook-border {
+  background: var(--bg-dark);
+  border: 6px solid var(--pixel-border);
+  box-shadow: 
+    0 0 0 2px var(--bg-dark),
+    8px 8px 0 rgba(0, 0, 0, 0.5);
+  padding: 4px;
+}
+
+/* Parchemin intérieur */
+.logbook-parchment {
+  background: linear-gradient(
+    135deg,
+    #f4e4c1 0%,
+    #e8d4a8 50%,
+    #f4e4c1 100%
+  );
+  border: 3px solid #8b7355;
+  box-shadow: inset 0 0 30px rgba(139, 115, 85, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Texture parchemin */
+.logbook-parchment::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(139, 115, 85, 0.03) 2px,
+      rgba(139, 115, 85, 0.03) 4px
+    );
+  pointer-events: none;
+}
+
+/* Header */
+.logbook-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 3px solid #8b7355;
+  background: rgba(139, 115, 85, 0.05);
+  position: relative;
+  z-index: 1;
+}
+
+.logbook-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  color: #3a2a1a;
+  text-shadow: 1px 1px 0 rgba(244, 228, 193, 0.5);
+}
+
+.logbook-close {
+  background: none;
+  border: 2px solid #8b7355;
+  color: #3a2a1a;
+  font-size: 20px;
+  font-weight: bold;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: Arial, sans-serif;
+}
+
+.logbook-close:hover {
+  background: rgba(139, 115, 85, 0.2);
+  border-color: #5a4a3a;
+}
+
+/* Content */
+.logbook-content {
+  padding: 24px;
+  max-height: 60vh;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Custom scrollbar pour parchemin */
+.logbook-content::-webkit-scrollbar {
+  width: 12px;
+}
+
+.logbook-content::-webkit-scrollbar-track {
+  background: rgba(139, 115, 85, 0.1);
+  border: 2px solid #8b7355;
+}
+
+.logbook-content::-webkit-scrollbar-thumb {
+  background: #8b7355;
+  border: 2px solid #f4e4c1;
+}
+
+.logbook-content::-webkit-scrollbar-thumb:hover {
+  background: #5a4a3a;
+}
+
+/* Loading & Empty states */
+.logbook-loading,
+.logbook-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #5a4a3a;
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+}
+
+.logbook-hint {
+  font-size: 16px;
+  color: #8b7355;
+  margin-top: 12px;
+}
+
+/* Timeline */
+.logbook-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Day section */
+.logbook-day {
+  position: relative;
+}
+
+.logbook-date {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: #3a2a1a;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px dashed #8b7355;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-marker {
+  color: #d4a76a;
+  font-size: 12px;
+}
+
+/* Entries container */
+.logbook-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 20px;
+}
+
+/* Individual entry */
+.logbook-entry {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(139, 115, 85, 0.3);
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.logbook-entry:hover {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: #8b7355;
+  transform: translateX(4px);
+}
+
+.entry-time {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: #8b7355;
+  flex-shrink: 0;
+  min-width: 70px;
+}
+
+.entry-content {
+  flex: 1;
+}
+
+.entry-task {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: #3a2a1a;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.entry-context {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.context-quest,
+.context-chapter {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: #5a4a3a;
+  background: rgba(139, 115, 85, 0.1);
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+
+.entry-xp {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  color: #d4a76a;
+  margin-top: 4px;
+}
+
+/* Footer */
+.logbook-footer {
+  padding: 16px 24px;
+  border-top: 3px solid #8b7355;
+  background: rgba(139, 115, 85, 0.05);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.logbook-stats {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: #5a4a3a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .logbook-modal {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .logbook-title {
+    font-size: 11px;
+  }
+
+  .logbook-content {
+    padding: 16px;
+    max-height: 65vh;
+  }
+
+  .logbook-entries {
+    padding-left: 12px;
+  }
+
+  .entry-time {
+    min-width: 60px;
+    font-size: 14px;
+  }
+
+  .entry-task {
+    font-size: 18px;
+  }
+}

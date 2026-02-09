@@ -150,7 +150,7 @@ export default function QuestSection({
   return (
     <section className={`section ${isOpen ? 'open' : ''}`}>
       <div className="section-header" onClick={() => setIsOpen(!isOpen)}>
-        <h2 className="section-title">QUÊTES</h2>
+        <h2 className="section-title">QUESTS</h2>
         <span className="section-toggle">▼</span>
       </div>
       
@@ -190,11 +190,11 @@ export default function QuestSection({
                       className="task-btn-delete-subtle" 
                       onClick={(e) => {
                         e.stopPropagation()
-                        if (confirm(`Supprimer la quête "${quest.name}" ?`)) {
+                        if (confirm(`Delete quest "${quest.name}"?`)) {
                           onDeleteQuest(quest.id)
                         }
                       }}
-                      title="Supprimer"
+                      title="Delete"
                     >
                       ✕
                     </button>
@@ -236,11 +236,11 @@ export default function QuestSection({
                               className="task-btn-delete-subtle" 
                               onClick={(e) => {
                                 e.stopPropagation()
-                                if (confirm(`Supprimer le chapitre "${chapter.name}" ?`)) {
+                                if (confirm(`Delete chapter "${chapter.name}"?`)) {
                                   onDeleteChapter(chapter.id)
                                 }
                               }}
-                              title="Supprimer"
+                              title="Delete"
                             >
                               ✕
                             </button>
@@ -277,7 +277,7 @@ export default function QuestSection({
                                     e.stopPropagation()
                                     onDeleteTask(task.id)
                                   }}
-                                  title="Supprimer"
+                                  title="Delete"
                                 >
                                   ✕
                                 </button>
@@ -292,7 +292,7 @@ export default function QuestSection({
                               onAddTask(quest.id, chapter.id)
                             }}
                           >
-                            + Tâche
+                            + Task
                           </button>
                         </div>
                       </div>
@@ -328,7 +328,7 @@ export default function QuestSection({
                             e.stopPropagation()
                             onDeleteTask(task.id)
                           }}
-                          title="Supprimer"
+                          title="Delete"
                         >
                           ✕
                         </button>
@@ -345,7 +345,7 @@ export default function QuestSection({
                         onAddChapter(quest.id)
                       }}
                     >
-                      + Chapitre
+                      + Chapter
                     </button>
                     <button 
                       className="add-sub-btn" 
@@ -354,12 +354,12 @@ export default function QuestSection({
                         onAddTask(quest.id, null)
                       }}
                     >
-                      + Tâche directe
+                      + Task directe
                     </button>
                   </div>
                   
                   <div className="quest-xp-reward">
-                    Bonus quête : +{rank?.xp || 0} XP
+                    Quest Bonus : +{rank?.xp || 0} XP
                   </div>
                 </div>
               </div>

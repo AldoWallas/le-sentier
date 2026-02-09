@@ -114,7 +114,7 @@ export default function TaskSection({ tasks, onComplete, onDelete, onEdit, onAdd
   return (
     <section className={`section ${isOpen ? 'open' : ''}`}>
       <div className="section-header section-header-clickable" onClick={toggleOpen}>
-        <h2 className="section-title">TÂCHES DU JOUR</h2>
+        <h2 className="section-title">DAILY TASKS</h2>
         <span className="section-toggle">▼</span>
       </div>
       
@@ -163,7 +163,7 @@ export default function TaskSection({ tasks, onComplete, onDelete, onEdit, onAdd
                         e.stopPropagation()
                         onDelete(task.id)
                       }}
-                      title="Supprimer"
+                      title="Delete"
                     >
                       ✕
                     </button>
@@ -174,11 +174,11 @@ export default function TaskSection({ tasks, onComplete, onDelete, onEdit, onAdd
           </ul>
           
           {tasks.length === 0 && (
-            <p className="empty-message">Aucune tâche pour le moment</p>
+            <p className="empty-message">No tasks yet</p>
           )}
           
           <button className="add-btn" onClick={onAdd}>
-            + NOUVELLE TÂCHE
+            + NEW TASK
           </button>
         </div>
       </div>
