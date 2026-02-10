@@ -95,9 +95,11 @@ export default function Dashboard() {
   const completeTask = async (taskId) => {
     console.log('=== completeTask CALLED ===')
     console.log('TaskId:', taskId)
+    console.log('All tasks:', tasks)
     
     const task = tasks.find(t => t.id === taskId)
     console.log('Task found:', task)
+    console.log('Task exists?', !!task)
     
     if (!task) {
       console.log('ERROR: No task found, returning')
