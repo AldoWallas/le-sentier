@@ -14,6 +14,7 @@ import HeroSection from '../components/HeroSection'
 import '../styles/dashboard.css'
 
 export default function Dashboard() {
+  // Build timestamp to force cache bust: 1739194800000
   const [character, setCharacter] = useState(null)
   const [tasks, setTasks] = useState([])
   const [quests, setQuests] = useState([])
