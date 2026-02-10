@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
@@ -14,7 +14,7 @@ import HeroSection from '../components/HeroSection'
 import '../styles/dashboard.css'
 
 export default function Dashboard() {
-  // Build timestamp to force cache bust: 1739194800000
+  // Build timestamp to force cache bust: 1739195600000
   const [character, setCharacter] = useState(null)
   const [tasks, setTasks] = useState([])
   const [quests, setQuests] = useState([])
@@ -93,7 +93,7 @@ export default function Dashboard() {
     return diff + 1
   }
 
-  const completeTask = async (taskId) => {
+  const completeTask = useCallback(async (taskId) => {
     console.log('=== completeTask CALLED ===')
     console.log('TaskId:', taskId)
     console.log('All tasks:', tasks)
@@ -188,7 +188,7 @@ export default function Dashboard() {
         ? { ...t, status: newStatus, completed_at: completedAt }
         : t
     ))
-  }
+  }, [tasks, character, quests, chapters])
 
   const deleteTask = async (taskId) => {
     await supabase
