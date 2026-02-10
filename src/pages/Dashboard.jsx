@@ -72,7 +72,14 @@ export default function Dashboard() {
       .neq('status', 'abandoned')
       .order('created_at', { ascending: false })
     
-    setQuests(questsData || [])
+    // Trier : main quests en premier
+    const sortedQuests = (questsData || []).sort((a, b) => {
+      if (a.is_main_quest && !b.is_main_quest) return -1
+      if (!a.is_main_quest && b.is_main_quest) return 1
+      return 0
+    })
+    
+    setQuests(sortedQuests)
     
     const { data: chaptersData } = await supabase
       .from('chapters')
@@ -253,13 +260,12 @@ export default function Dashboard() {
   }
 
   const addQuest = async (name, rank, xpReward, isMainQuest = false) => {
-    // Si on active une main quest, désactiver les autres
+    // Si on active une main quest, désactiver TOUTES les autres
     if (isMainQuest) {
       await supabase
         .from('quests')
         .update({ is_main_quest: false })
         .eq('character_id', character.id)
-        .eq('is_main_quest', true)
     }
 
     const { data, error } = await supabase
@@ -276,7 +282,15 @@ export default function Dashboard() {
       .single()
 
     if (!error && data) {
-      setQuests(prev => [data, ...prev])
+      setQuests(prev => {
+        const updated = [data, ...prev]
+        // Trier : main quests en premier
+        return updated.sort((a, b) => {
+          if (a.is_main_quest && !b.is_main_quest) return -1
+          if (!a.is_main_quest && b.is_main_quest) return 1
+          return 0
+        })
+      })
     }
   }
 

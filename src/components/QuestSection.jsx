@@ -164,7 +164,7 @@ export default function QuestSection({
             const rank = QUEST_RANKS.find(r => r.id === quest.rank)
             
             return (
-              <div key={quest.id} className={`quest-item ${isQuestOpen ? 'open' : ''}`}>
+              <div key={quest.id} className={`quest-item ${isQuestOpen ? 'open' : ''} ${quest.is_main_quest ? 'main-quest' : ''}`}>
                 <div className="quest-header">
                   <span className="quest-icon" onClick={() => toggleQuest(quest.id)}>{rank?.emoji || '❓'}</span>
                   <div 

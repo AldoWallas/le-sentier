@@ -669,3 +669,37 @@
     font-size: 14px;
   }
 }
+
+
+/* Main Quest - Effet de surbrillance */
+.quest-item.main-quest {
+  position: relative;
+  animation: main-quest-pulse 3s ease-in-out infinite;
+}
+
+.quest-item.main-quest::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  border-radius: 4px;
+  opacity: 0.3;
+  z-index: -1;
+  filter: blur(4px);
+}
+
+.quest-item.main-quest .quest-icon {
+  filter: drop-shadow(0 0 4px #ffd700);
+}
+
+@keyframes main-quest-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(255, 215, 0, 0.6);
+  }
+}
