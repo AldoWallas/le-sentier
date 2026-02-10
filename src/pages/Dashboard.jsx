@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
@@ -14,12 +14,13 @@ import HeroSection from '../components/HeroSection'
 import '../styles/dashboard.css'
 
 export default function Dashboard() {
+  // Build timestamp to force cache bust: 1739195600000
   const [character, setCharacter] = useState(null)
   const [tasks, setTasks] = useState([])
   const [quests, setQuests] = useState([])
   const [chapters, setChapters] = useState([])
   const [loading, setLoading] = useState(true)
-  const [triggerHeart, setTriggerHeart] = useState(0) // ← AJOUT : state pour déclencher le cœur
+  const [triggerHeart, setTriggerHeart] = useState(0)
   
   // Modals
   const [taskModalOpen, setTaskModalOpen] = useState(false)
@@ -92,12 +93,36 @@ export default function Dashboard() {
     return diff + 1
   }
 
-  const completeTask = async (taskId) => {
-    const task = tasks.find(t => t.id === taskId)
-    if (!task) return
+  const completeTask = useCallback(async (taskId) => {
+    console.log('=== completeTask CALLED ===')
+    console.log('TaskId:', taskId)
+    
+    // Fetch task from Supabase instead of closure
+    const { data: task, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .eq('id', taskId)
+      .single()
+    
+    console.log('Task fetched from DB:', task)
+    console.log('Fetch error:', error)
+    
+    if (!task || error) {
+      console.log('ERROR: No task found in DB')
+      return
+    }
 
     const newStatus = task.status === 'completed' ? 'pending' : 'completed'
     const completedAt = newStatus === 'completed' ? new Date().toISOString() : null
+
+    console.log('completeTask details:', {
+      taskId,
+      taskName: task.name,
+      oldStatus: task.status,
+      newStatus,
+      hasCharacter: !!character,
+      characterId: character?.id
+    })
 
     await supabase
       .from('tasks')
@@ -105,9 +130,9 @@ export default function Dashboard() {
       .eq('id', taskId)
 
     if (newStatus === 'completed' && character) {
-      // ← AJOUT : Déclencher le cœur quand une tâche est complétée
-      setTriggerHeart(prev => prev + 1)
+      console.log('>>> Entering completed block')
       
+      // Ajouter XP
       const newXp = character.xp + task.xp
       const newLevel = calculateLevel(newXp)
       
@@ -117,6 +142,38 @@ export default function Dashboard() {
         .eq('id', character.id)
       
       setCharacter(prev => ({ ...prev, xp: newXp, level: newLevel }))
+
+      // Enregistrer dans l'historique
+      const quest = quests.find(q => q.id === task.quest_id)
+      const chapter = chapters.find(c => c.id === task.chapter_id)
+      
+      console.log('Saving to task_history:', {
+        character_id: character.id,
+        task_name: task.name,
+        task_xp: task.xp,
+        quest_name: quest?.name || null,
+        chapter_name: chapter?.name || null
+      })
+      
+      const { data, error } = await supabase
+        .from('task_history')
+        .insert({
+          character_id: character.id,
+          task_name: task.name,
+          task_xp: task.xp,
+          quest_name: quest?.name || null,
+          chapter_name: chapter?.name || null,
+          completed_at: completedAt
+        })
+
+      if (error) {
+        console.error('ERROR saving task_history:', error)
+      } else {
+        console.log('SUCCESS: task_history saved!', data)
+      }
+
+      // Déclencher l'animation coeur
+      setTriggerHeart(prev => prev + 1)
     }
     
     if (newStatus === 'pending' && character) {
@@ -136,7 +193,7 @@ export default function Dashboard() {
         ? { ...t, status: newStatus, completed_at: completedAt }
         : t
     ))
-  }
+  }, [character, quests, chapters])
 
   const deleteTask = async (taskId) => {
     await supabase

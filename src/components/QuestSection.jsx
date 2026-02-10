@@ -257,7 +257,6 @@ export default function QuestSection({
                               <div 
                                 className="sub-task-checkbox"
                                 onClick={() => {
-                                  alert('QUEST TASK CLICKED!')
                                   console.log('=== QUEST TASK CHECKBOX CLICKED ===')
                                   console.log('Task ID:', task.id)
                                   console.log('onTaskComplete:', onTaskComplete)
