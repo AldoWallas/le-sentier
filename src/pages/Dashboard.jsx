@@ -252,7 +252,16 @@ export default function Dashboard() {
     }
   }
 
-  const addQuest = async (name, rank, xpReward) => {
+  const addQuest = async (name, rank, xpReward, isMainQuest = false) => {
+    // Si on active une main quest, désactiver les autres
+    if (isMainQuest) {
+      await supabase
+        .from('quests')
+        .update({ is_main_quest: false })
+        .eq('character_id', character.id)
+        .eq('is_main_quest', true)
+    }
+
     const { data, error } = await supabase
       .from('quests')
       .insert({
@@ -260,7 +269,8 @@ export default function Dashboard() {
         name,
         rank,
         xp_reward: xpReward,
-        status: 'active'
+        status: 'active',
+        is_main_quest: isMainQuest
       })
       .select()
       .single()
@@ -270,10 +280,20 @@ export default function Dashboard() {
     }
   }
 
-  const editQuest = async (questId, name, rank, xpReward) => {
+  const editQuest = async (questId, name, rank, xpReward, isMainQuest = false) => {
+    // Si on active une main quest, désactiver les autres
+    if (isMainQuest) {
+      await supabase
+        .from('quests')
+        .update({ is_main_quest: false })
+        .eq('character_id', character.id)
+        .eq('is_main_quest', true)
+        .neq('id', questId) // Sauf celle qu'on édite
+    }
+
     const { data, error } = await supabase
       .from('quests')
-      .update({ name, rank, xp_reward: xpReward })
+      .update({ name, rank, xp_reward: xpReward, is_main_quest: isMainQuest })
       .eq('id', questId)
       .select()
       .single()
@@ -297,13 +317,13 @@ export default function Dashboard() {
     setQuestModalOpen(true)
   }
 
-  const handleQuestModalSubmit = (name, rank, xpReward) => {
+  const handleQuestModalSubmit = (name, rank, xpReward, isMainQuest) => {
     if (questToEdit) {
       // Mode édition
-      editQuest(questToEdit.id, name, rank, xpReward)
+      editQuest(questToEdit.id, name, rank, xpReward, isMainQuest)
     } else {
       // Mode création
-      addQuest(name, rank, xpReward)
+      addQuest(name, rank, xpReward, isMainQuest)
     }
   }
 

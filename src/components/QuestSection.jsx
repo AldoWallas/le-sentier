@@ -176,7 +176,10 @@ export default function QuestSection({
                     onTouchStart={() => handleLongPressStart(quest, onEditQuest)}
                     onTouchEnd={handleLongPressEnd}
                   >
-                    <div className="quest-name">{quest.name.toUpperCase()}</div>
+                    <div className="quest-name">
+                      {quest.is_main_quest && <span style={{ marginRight: '8px', color: '#ffd700' }}>⭐</span>}
+                      {quest.name.toUpperCase()}
+                    </div>
                     <div className="quest-progress-bar">
                       <div 
                         className="quest-progress-fill" 

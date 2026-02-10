@@ -5,11 +5,13 @@ import '../styles/modal.css'
 export default function QuestModal({ onClose, onSubmit, initialQuest = null }) {
   const [name, setName] = useState(initialQuest?.name || '')
   const [selectedRank, setSelectedRank] = useState(initialQuest?.rank || 'rank_e')
+  const [isMainQuest, setIsMainQuest] = useState(initialQuest?.is_main_quest || false)
 
   useEffect(() => {
     if (initialQuest) {
       setName(initialQuest.name)
       setSelectedRank(initialQuest.rank)
+      setIsMainQuest(initialQuest.is_main_quest || false)
     }
   }, [initialQuest])
 
@@ -19,7 +21,7 @@ export default function QuestModal({ onClose, onSubmit, initialQuest = null }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (name.trim() && rank) {
-      onSubmit(name.trim(), selectedRank, rank.xp)
+      onSubmit(name.trim(), selectedRank, rank.xp, isMainQuest)
       onClose()
     }
   }
@@ -27,23 +29,23 @@ export default function QuestModal({ onClose, onSubmit, initialQuest = null }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal pixel-border" onClick={e => e.stopPropagation()}>
-        <h3 className="modal-title">{isEditing ? 'ÉDITER QUÊTE' : 'NOUVELLE QUÊTE'}</h3>
+        <h3 className="modal-title">{isEditing ? 'EDIT QUEST' : 'NEW QUEST'}</h3>
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>NOM DE LA QUÊTE</label>
+            <label>QUEST NAME</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Nommer cette quête..."
+              placeholder="Name this quest..."
               className="pixel-input"
               autoFocus
             />
           </div>
           
           <div className="rank-selector">
-            <label className="rank-label">DIFFICULTÉ PERÇUE</label>
+            <label className="rank-label">PERCEIVED DIFFICULTY</label>
             <div className="rank-grid">
               {QUEST_RANKS.map(r => (
                 <button
@@ -66,13 +68,25 @@ export default function QuestModal({ onClose, onSubmit, initialQuest = null }) {
               <div className="rank-xp">+{rank?.xp} XP</div>
             </div>
           </div>
+
+          <div className="form-group" style={{ marginTop: '16px' }}>
+            <label className="checkbox-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={isMainQuest}
+                onChange={(e) => setIsMainQuest(e.target.checked)}
+                style={{ width: '16px', height: '16px' }}
+              />
+              <span style={{ fontSize: '14px' }}>Main Quest (only one active at a time)</span>
+            </label>
+          </div>
           
           <div className="modal-actions">
             <button type="button" className="pixel-btn" onClick={onClose}>
-              ANNULER
+              CANCEL
             </button>
             <button type="submit" className="pixel-btn primary" disabled={!name.trim()}>
-              {isEditing ? 'MODIFIER' : 'CRÉER'}
+              {isEditing ? 'UPDATE' : 'CREATE'}
             </button>
           </div>
         </form>
