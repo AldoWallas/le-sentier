@@ -96,14 +96,19 @@ export default function Dashboard() {
   const completeTask = useCallback(async (taskId) => {
     console.log('=== completeTask CALLED ===')
     console.log('TaskId:', taskId)
-    console.log('All tasks:', tasks)
     
-    const task = tasks.find(t => t.id === taskId)
-    console.log('Task found:', task)
-    console.log('Task exists?', !!task)
+    // Fetch task from Supabase instead of closure
+    const { data: task, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .eq('id', taskId)
+      .single()
     
-    if (!task) {
-      console.log('ERROR: No task found, returning')
+    console.log('Task fetched from DB:', task)
+    console.log('Fetch error:', error)
+    
+    if (!task || error) {
+      console.log('ERROR: No task found in DB')
       return
     }
 
@@ -188,7 +193,7 @@ export default function Dashboard() {
         ? { ...t, status: newStatus, completed_at: completedAt }
         : t
     ))
-  }, [tasks, character, quests, chapters])
+  }, [character, quests, chapters])
 
   const deleteTask = async (taskId) => {
     await supabase
