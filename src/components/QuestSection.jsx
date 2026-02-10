@@ -256,7 +256,13 @@ export default function QuestSection({
                             >
                               <div 
                                 className="sub-task-checkbox"
-                                onClick={() => onTaskComplete(task.id)}
+                                onClick={() => {
+                                  alert('QUEST TASK CLICKED!')
+                                  console.log('=== QUEST TASK CHECKBOX CLICKED ===')
+                                  console.log('Task ID:', task.id)
+                                  console.log('onTaskComplete:', onTaskComplete)
+                                  onTaskComplete(task.id)
+                                }}
                               >
                                 {task.status === 'completed' ? '✓' : '○'}
                               </div>
@@ -307,7 +313,12 @@ export default function QuestSection({
                     >
                       <div 
                         className="sub-task-checkbox"
-                        onClick={() => onTaskComplete(task.id)}
+                        onClick={() => {
+                          console.log('=== QUEST DIRECT TASK CHECKBOX CLICKED ===')
+                          console.log('Task ID:', task.id)
+                          console.log('onTaskComplete:', onTaskComplete)
+                          onTaskComplete(task.id)
+                        }}
                       >
                         {task.status === 'completed' ? '✓' : '○'}
                       </div>
