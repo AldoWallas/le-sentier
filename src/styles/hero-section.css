@@ -8,15 +8,16 @@
 }
 
 /* ===== FADE IN ===== */
+/* ===== FADE IN - DÉSACTIVÉ ===== */
 
 .hero-landscape {
-  opacity: 0;
-  transition: opacity 2s ease-in;
+  opacity: 1; /* Toujours visible maintenant */
+  /* transition: opacity 2s ease-in; - Plus besoin */
 }
 
-.hero-landscape.fade-in-active {
+/* .hero-landscape.fade-in-active { - Plus utilisé
   opacity: 1;
-}
+} */
 
 /* ===== SECTION PAYSAGE ===== */
 
@@ -48,31 +49,15 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+  background: transparent; /* Laisser voir DynamicBackground */
 }
 
-.hero-landscape.dawn .layer-sky {
-  background: linear-gradient(to bottom, 
-    #ff9a76 0%, #ffd89b 30%, #a8d8ea 100%
-  );
-}
-
-.hero-landscape.day .layer-sky {
-  background: linear-gradient(to bottom, 
-    #4a9fd8 0%, #87ceeb 40%, #b4e7f5 100%
-  );
-}
-
-.hero-landscape.dusk .layer-sky {
-  background: linear-gradient(to bottom, 
-    #3d3056 0%, #9b6a9d 30%, #d4a5a5 100%
-  );
-}
-
-.hero-landscape.night .layer-sky {
-  background: linear-gradient(to bottom, 
-    #1a1c2c 0%, #262b44 50%, #3d405b 100%
-  );
-}
+/* Supprimer les backgrounds - on utilise DynamicBackground maintenant
+.hero-landscape.dawn .layer-sky { ... }
+.hero-landscape.day .layer-sky { ... }
+.hero-landscape.dusk .layer-sky { ... }
+.hero-landscape.night .layer-sky { ... }
+*/
 
 /* ===== COUCHE 2 : ÉTOILES ===== */
 

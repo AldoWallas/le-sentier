@@ -472,6 +472,8 @@ export default function Dashboard() {
 
   return (
   <div className="dashboard">
+    <DynamicBackground />
+    
     <HeroSection
       character={character}
       stats={stats}

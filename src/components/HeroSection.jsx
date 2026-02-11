@@ -7,7 +7,6 @@ import '../styles/hero-section.css'
 export default function HeroSection({ character, stats, dayCount, onSignOut, showHeart }) {
   const [timeOfDay, setTimeOfDay] = useState('day')
   const [greeting, setGreeting] = useState('')
-  const [fadeIn, setFadeIn] = useState(false)
   const [hearts, setHearts] = useState([])
   const [trees, setTrees] = useState([])
   const [menuOpen, setMenuOpen] = useState(false)
@@ -51,25 +50,7 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
   const [currentInterval, setCurrentInterval] = useState(3000)
   const [currentSpeed, setCurrentSpeed] = useState(15)
 
-  // Générer les étoiles UNE SEULE FOIS
-  const stars = useMemo(() => {
-    return [...Array(60)].map((_, i) => ({
-      id: i,
-      top: Math.random() * 60,
-      left: Math.random() * 100,
-      delay: Math.random() * 3
-    }))
-  }, [])
-
-  // Générer les nuages UNE SEULE FOIS
-  const clouds = useMemo(() => {
-    return [...Array(5)].map((_, i) => ({
-      id: i,
-      top: 5 + i * 8,
-      delay: i * -25,
-      duration: 50 + i * 8
-    }))
-  }, [])
+  // Stars et clouds supprimés - gérés par DynamicBackground
 
   // Refs pour éviter de recréer l'interval à chaque changement de valeur
   const probabilityRef = useRef(20)
@@ -110,8 +91,6 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
 
     updateTime()
     const interval = setInterval(updateTime, 60000)
-    
-    setTimeout(() => setFadeIn(true), 300)
     
     return () => clearInterval(interval)
   }, [])
@@ -269,44 +248,10 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
   return (
     <>
       {/* SECTION PAYSAGE */}
-      <section className={`hero-landscape ${timeOfDay} ${fadeIn ? 'fade-in-active' : ''}`}>
+      <section className={`hero-landscape ${timeOfDay}`}>
         <div className="horizon-line" />
-        <div className="layer-sky" />
-
-        {(timeOfDay === 'night' || timeOfDay === 'dusk') && (
-          <div className="layer-stars">
-            {stars.map((star) => (
-              <div
-                key={star.id}
-                className="star"
-                style={{
-                  top: `${star.top}%`,
-                  left: `${star.left}%`,
-                  animationDelay: `${star.delay}s`
-                }}
-              />
-            ))}
-          </div>
-        )}
-
-        <div className="layer-celestial">
-          <div className="celestial sun" />
-          <div className="celestial moon" />
-        </div>
-
-        <div className="layer-clouds">
-          {clouds.map((cloud) => (
-            <div
-              key={cloud.id}
-              className="cloud"
-              style={{
-                top: `${cloud.top}%`,
-                animationDelay: `${cloud.delay}s`,
-                animationDuration: `${cloud.duration}s`
-              }}
-            />
-          ))}
-        </div>
+        
+        {/* layer-sky, layer-stars, layer-clouds supprimés - gérés par DynamicBackground */}
 
         <div className="layer-mountains-far">
           {[...Array(8)].map((_, i) => (
