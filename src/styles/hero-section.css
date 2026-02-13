@@ -473,23 +473,6 @@
   overflow: visible; /* Permet aux pixels de dépasser */
 }
 
-/* FORCER les conteneurs à être invisibles */
-.layer-character .character-sprite {
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.layer-character .sprite-frame {
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.layer-character .sprite-pixels {
-  /* Seul cet élément a le droit d'avoir un box-shadow (le sprite) */
-  background: transparent !important;
-}
 
 /* ===== COUCHE 10 : UI OVERLAY ===== */
 
