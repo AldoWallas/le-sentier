@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './contexts/AuthContext'
+import { MessageProvider } from './components/MessageContext'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import NewCharacter from './pages/NewCharacter'
@@ -20,25 +21,27 @@ function PrivateRoute({ children }) {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/new-character"
-        element={
-          <PrivateRoute>
-            <NewCharacter />
-          </PrivateRoute>
-        }
-      />
-    </Routes>
+    <MessageProvider>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/new-character"
+          element={
+            <PrivateRoute>
+              <NewCharacter />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </MessageProvider>
   )
 }
 

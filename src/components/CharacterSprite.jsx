@@ -18,13 +18,9 @@ export default function CharacterSprite({
   const config = animations[animation] || animations.walk
 
   useEffect(() => {
-    console.log('🎬 Animation démarrée:', animation, 'Speed:', config.speed, 'Frames:', config.frames)
-    
     const interval = setInterval(() => {
       setCurrentFrame(prev => {
         const nextFrame = prev + 1
-        console.log('🎞️ Frame:', prev, '→', nextFrame % config.frames)
-        
         // Si animation ne boucle pas et terminée, rester sur dernière frame
         if (config.loop === false && nextFrame >= config.frames) {
           return config.frames - 1
@@ -33,10 +29,7 @@ export default function CharacterSprite({
       })
     }, config.speed)
 
-    return () => {
-      console.log('🛑 Animation arrêtée')
-      clearInterval(interval)
-    }
+    return () => clearInterval(interval)
   }, [animation, config.speed, config.frames, config.loop])
 
   // Forcer backgroundPosition avec !important (écrasé par CSS sinon)

@@ -2,9 +2,12 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import CharacterSprite from './CharacterSprite'
 import HeartParticle from './HeartParticle'
 import LogbookModal from './LogbookModal'
+import { useGameMessages } from '../hooks/useGameMessages'
+import MessageBox from './MessageBox'
 import '../styles/hero-section.css'
 
 export default function HeroSection({ character, stats, dayCount, onSignOut, showHeart }) {
+  const messages = useGameMessages()
   const [timeOfDay, setTimeOfDay] = useState('day')
   const [greeting, setGreeting] = useState('')
   const [hearts, setHearts] = useState([])
@@ -50,7 +53,25 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
   const [currentInterval, setCurrentInterval] = useState(3000)
   const [currentSpeed, setCurrentSpeed] = useState(15)
 
-  // Stars et clouds supprimés - gérés par DynamicBackground
+  // Générer les étoiles UNE SEULE FOIS
+  const stars = useMemo(() => {
+    return [...Array(60)].map((_, i) => ({
+      id: i,
+      top: Math.random() * 60,
+      left: Math.random() * 100,
+      delay: Math.random() * 3
+    }))
+  }, [])
+
+  // Générer les nuages UNE SEULE FOIS
+  const clouds = useMemo(() => {
+    return [...Array(5)].map((_, i) => ({
+      id: i,
+      top: 5 + i * 8,
+      delay: i * -25,
+      duration: 50 + i * 8
+    }))
+  }, [])
 
   // Refs pour éviter de recréer l'interval à chaque changement de valeur
   const probabilityRef = useRef(20)
@@ -76,16 +97,16 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
       
       if (hour >= 5 && hour < 12) {
         setTimeOfDay('dawn')
-        setGreeting('BONJOUR')
+        setGreeting('Bonjour')
       } else if (hour >= 12 && hour < 18) {
         setTimeOfDay('day')
-        setGreeting('BON APRÈS-MIDI')
+        setGreeting('Bon après-midi')
       } else if (hour >= 18 && hour < 22) {
         setTimeOfDay('dusk')
-        setGreeting('BONSOIR')
+        setGreeting('Bonsoir')
       } else {
         setTimeOfDay('night')
-        setGreeting('BONNE NUIT')
+        setGreeting('Bonne nuit')
       }
     }
 
@@ -94,6 +115,21 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
     
     return () => clearInterval(interval)
   }, [])
+
+  // Welcome message on load (once per session)
+  useEffect(() => {
+    const hasShownWelcome = sessionStorage.getItem('welcome-shown')
+    
+    if (greeting && character?.name && !hasShownWelcome) {
+      const timer = setTimeout(() => {
+        messages.welcome(character.name)
+        sessionStorage.setItem('welcome-shown', 'true')
+      }, 500)
+      
+      return () => clearTimeout(timer)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [greeting, character?.name]) // Don't include 'messages' to avoid infinite loop
 
   // Système de spawn des arbres
   useEffect(() => {
@@ -250,8 +286,37 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
       {/* SECTION PAYSAGE */}
       <section className={`hero-landscape ${timeOfDay}`}>
         <div className="horizon-line" />
-        
-        {/* layer-sky, layer-stars, layer-clouds supprimés - gérés par DynamicBackground */}
+        <div className="layer-sky" />
+
+        {(timeOfDay === 'night' || timeOfDay === 'dusk') && (
+          <div className="layer-stars">
+            {stars.map((star) => (
+              <div
+                key={star.id}
+                className="star"
+                style={{
+                  top: `${star.top}%`,
+                  left: `${star.left}%`,
+                  animationDelay: `${star.delay}s`
+                }}
+              />
+            ))}
+          </div>
+        )}
+
+        <div className="layer-clouds">
+          {clouds.map((cloud) => (
+            <div
+              key={cloud.id}
+              className="cloud"
+              style={{
+                top: `${cloud.top}%`,
+                animationDelay: `${cloud.delay}s`,
+                animationDuration: `${cloud.duration}s`
+              }}
+            />
+          ))}
+        </div>
 
         <div className="layer-mountains-far">
           {[...Array(8)].map((_, i) => (
@@ -307,7 +372,6 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
 
         <div className="layer-ui-top">
           <div className="ui-top-left">
-            <div className="greeting">{greeting}, TRAVELER</div>
             <div className="day-counter">DAY {dayCount}</div>
           </div>
           
@@ -376,6 +440,9 @@ export default function HeroSection({ character, stats, dayCount, onSignOut, sho
             </span>
           </div>
         </div>
+
+        {/* Message Box */}
+        <MessageBox />
       </section>
 
       {/* Logbook Modal */}
